@@ -14,7 +14,7 @@ app.listen(port, () => {
 app.use(requestInfo)
 
 app.use('/api/project', require('./routes/projectRoutes'))
-
+app.use('/api/user', require('./routes/userRoutes'))
 
 
 app.use(errorHandler)

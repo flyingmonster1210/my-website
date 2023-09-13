@@ -13,7 +13,7 @@ app.listen(port, () => {
 
 app.use(requestInfo)
 
-
+app.use('/api/project', require('./routes/projectRoutes'))
 
 
 

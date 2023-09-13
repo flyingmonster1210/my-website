@@ -1,8 +1,25 @@
 const express = require('express')
+const dotenv = require('dotenv').config()
+const port = process.env.PORT
 const app = express()
-const port = 3000
 
+const { requestInfo } = require('./middlewares/normalMiddleware')
+const { errorHandler } = require('./middlewares/errorMiddleware')
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log('\n\n-----------------------------------------------------------')
+  console.log(`Server is listening on port ${port}`)
 })
+
+app.use(requestInfo)
+
+
+
+
+
+app.use(errorHandler)
+
+
+
+
+

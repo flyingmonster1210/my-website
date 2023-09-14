@@ -1,4 +1,5 @@
 const asyncHandler = require('express-async-handler')
+const { isEmpty } = require('../tools')
 
 // @desc    Show all the projects
 // @route   GET /api/project/
@@ -11,8 +12,14 @@ const getProjects = asyncHandler(async (req, res) => {
 // @desc    Add a new project
 // @route   POST /api/project/
 const addProject = asyncHandler(async (req, res) => {
+  if (isEmpty(req.body, ['message', 'id'])) {
+    res.status(400)
+    throw new Error('The request body is empty, or it does not contain the required field.')
+  }
+
   res.json({
     message: 'add a new project',
+    body: req.body
   })
 })
 

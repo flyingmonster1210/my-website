@@ -11,6 +11,9 @@ app.listen(port, () => {
   console.log(`Server is listening on port ${port}`)
 })
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+
 app.use(requestInfo)
 
 app.use('/api/project', require('./routes/projectRoutes'))

@@ -21,13 +21,13 @@ const addProject = asyncHandler(async (req, res) => {
     throw new Error('The request body is empty, or it does not contain the required field.')
   }
 
-  const { name, technology, time, introduction, descprition, URL } = req.body
+  const { name, technology, time, introduction, description, URL } = req.body
   const newProject = await Project.create({
     name: name,
     technology: technology,
     time: time,
     introduction: introduction,
-    description: descprition,
+    description: description,
     URL: URL,
   })
 

@@ -13,12 +13,30 @@ const getAllProjects = asyncHandler(async (req, res) => {
   })
 })
 
+// @desc    Search the project with the project id
+// @route   GET /api/project/:id
+const getProject = asyncHandler(async (req, res) => {
+  const params = req.params
+
+  const check = isEmpty(params, ['id'])
+  if (check.result) {
+    res.status(400)
+    throw new Error(check.message)
+  }
+
+  const project = await Project.findById(params.id)
+  res.json({
+    project: project,
+  })
+})
+
 // @desc    Add a new project
 // @route   POST /api/project/
 const addProject = asyncHandler(async (req, res) => {
-  if (isEmpty(req.body, ['name', 'technology'])) {
+  const check = isEmpty(req.body, ['name', 'technology'])
+  if (check.result) {
     res.status(400)
-    throw new Error('The request body is empty, or it does not contain the required field.')
+    throw new Error(check.message)
   }
 
   const { name, technology, time, introduction, description, URL } = req.body
@@ -54,6 +72,7 @@ const deleteProject = asyncHandler(async (req, res) => {
 
 module.exports = {
   getAllProjects,
+  getProject,
   addProject,
   deleteProject,
   updateProject,

@@ -72,7 +72,7 @@ const updateProject = asyncHandler(async (req, res) => {
 
   res.json({
     message: 'Update the project with id:' + req.params.id + '.',
-    updatedProject: updatedProject,
+    updatedProject: req.body,
   })
 })
 

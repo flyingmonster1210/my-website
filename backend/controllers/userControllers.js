@@ -1,18 +1,86 @@
+const bcrypt = require('bcrypt')
 const asyncHandler = require('express-async-handler')
+
+const { isEmpty } = require('../tools')
+const User = require('../models/userModel')
+
+// @desc    Register a new user account
+// @route   Post /api/user/register
+const registerUser = asyncHandler(async (req, res) => {
+  const body = req.body
+  const check = isEmpty(body, ['username', 'password', 'email'])
+  if (check.result) {
+    res.status(400)
+    throw new Error(check.message)
+  }
+
+  const isUserExist = await User.findOne({ email: body.email })
+  if (isUserExist) {
+    res.status(400)
+    throw new Error('This email has been used, please user another one.')
+  }
+
+  const salt = await bcrypt.genSalt(Number(process.env.SALT))
+  const hashPassword = await bcrypt.hash(body.password, salt)
+
+  const newUser = await User.create({
+    ...body,
+    password: hashPassword,
+  })
+  res.json({
+    message: 'Create a new user.',
+    newUser: {
+      username: newUser.username,
+      email: newUser.email,
+      phone: newUser.phone,
+      linkedin: newUser.linkedin,
+      github: newUser.github,
+      introduction: newUser.introduction,
+      _id: newUser.id,
+    }
+  })
+})
 
 // @desc    User login and get the token
 // @route   POST /api/user/login
 const loginUser = asyncHandler(async (req, res) => {
+  const body = req.body
+  const check = isEmpty(body, ['email', 'password'])
+  if (check.result) {
+    res.status(400)
+    throw new Error(check.message)
+  }
+
+
   res.json({
     message: 'user login',
   })
 })
 
 // @desc    Update user info
-// @route   PUT /api/user/update
+// @route   PUT /api/user/update:id
 const updateUser = asyncHandler(async (req, res) => {
+  const body = req.body
+  const params = req.params
+  const check = [isEmpty(params, ['id']), isEmpty(body, ['username'])]
+  for (let i = 0; i < check.length; i++) {
+    if (check[i].result) {
+      res.status(400)
+      throw new Error(check[i].message)
+    }
+  }
+
+  const user = await User.findById(params.id)
+  if (!user) {
+    res.status(400)
+    throw new Error('User not found.')
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(params.id, body)
+
   res.json({
-    message: 'user update',
+    message: 'User info updated.',
+    updatedUser: body,
   })
 })
 
@@ -25,6 +93,7 @@ const getMe = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
+  registerUser,
   loginUser,
   getMe,
   updateUser,

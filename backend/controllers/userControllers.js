@@ -27,18 +27,25 @@ const registerUser = asyncHandler(async (req, res) => {
     ...body,
     password: hashPassword,
   })
-  res.json({
-    message: 'Create a new user.',
-    newUser: {
-      username: newUser.username,
-      email: newUser.email,
-      phone: newUser.phone,
-      linkedin: newUser.linkedin,
-      github: newUser.github,
-      introduction: newUser.introduction,
-      _id: newUser.id,
-    }
-  })
+
+  if (newUser) {
+    res.json({
+      message: 'Create a new user.',
+      newUser: {
+        username: newUser.username,
+        email: newUser.email,
+        phone: newUser.phone,
+        linkedin: newUser.linkedin,
+        github: newUser.github,
+        introduction: newUser.introduction,
+        _id: newUser.id,
+      }
+    })
+  }
+  else {
+    res.status(400)
+    throw new Error('Invlid register data.')
+  }
 })
 
 // @desc    User login and get the token
@@ -102,18 +109,24 @@ const updateUser = asyncHandler(async (req, res) => {
     }
   )
 
-  res.json({
-    message: 'User info updated.',
-    updatedUser: {
-      username: body.username,
-      email: body.email,
-      phone: body.phone,
-      linkedin: body.linkedin,
-      github: body.github,
-      introduction: body.introduction,
-      _id: params.id,
-    },
-  })
+  if (updatedUser) {
+    res.json({
+      message: 'User info updated.',
+      updatedUser: {
+        username: body.username,
+        email: body.email,
+        phone: body.phone,
+        linkedin: body.linkedin,
+        github: body.github,
+        introduction: body.introduction,
+        _id: params.id,
+      },
+    })
+  }
+  else {
+    res.status(400)
+    throw new Error('Invlid update data.')
+  }
 })
 
 // @desc    Get user info

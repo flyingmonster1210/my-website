@@ -17,7 +17,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const isUserExist = await User.findOne({ email: body.email })
   if (isUserExist) {
     res.status(400)
-    throw new Error('This email has been used, please user another one.')
+    throw new Error('This email has been used, please use another one.')
   }
 
   const salt = await bcrypt.genSalt(Number(process.env.SALT))
@@ -51,10 +51,26 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new Error(check.message)
   }
 
+  const user = await User.findOne({ email: body.email })
+  if (user && (await bcrypt.compare(body.password, user.password))) {
+    res.json({
+      message: 'User login.',
+      user: {
+        username: user.username,
+        email: user.email,
+        phone: user.phone,
+        linkedin: user.linkedin,
+        github: user.github,
+        introduction: user.introduction,
+        _id: user.id,
+      }
+    })
+  }
+  else {
+    res.status(400)
+    throw new Error('Invlid email or password.')
+  }
 
-  res.json({
-    message: 'user login',
-  })
 })
 
 // @desc    Update user info
@@ -76,11 +92,27 @@ const updateUser = asyncHandler(async (req, res) => {
     throw new Error('User not found.')
   }
 
-  const updatedUser = await User.findByIdAndUpdate(params.id, body)
+  const salt = await bcrypt.genSalt(Number(process.env.SALT))
+  const hashPassword = await bcrypt.hash(body.password, salt)
+  const updatedUser = await User.findByIdAndUpdate(
+    params.id,
+    {
+      ...body,
+      password: hashPassword,
+    }
+  )
 
   res.json({
     message: 'User info updated.',
-    updatedUser: body,
+    updatedUser: {
+      username: body.username,
+      email: body.email,
+      phone: body.phone,
+      linkedin: body.linkedin,
+      github: body.github,
+      introduction: body.introduction,
+      _id: params.id,
+    },
   })
 })
 

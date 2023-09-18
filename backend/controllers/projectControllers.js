@@ -41,11 +41,16 @@ const addProject = asyncHandler(async (req, res) => {
   }
 
   const newProject = await Project.create(req.body)
-
-  res.json({
-    message: 'Add a new project.',
-    newProject: newProject,
-  })
+  if (newProject) {
+    res.json({
+      message: 'Add a new project.',
+      newProject: newProject,
+    })
+  }
+  else {
+    res.status(400)
+    throw new Error('Fail to add project.')
+  }
 })
 
 // @desc    Update a project
@@ -70,10 +75,16 @@ const updateProject = asyncHandler(async (req, res) => {
     req.body,
   )
 
-  res.json({
-    message: 'Update the project with id:' + req.params.id + '.',
-    updatedProject: req.body,
-  })
+  if (updatedProject) {
+    res.json({
+      message: 'Update the project with id:' + req.params.id + '.',
+      updatedProject: req.body,
+    })
+  }
+  else {
+    res.status(400)
+    throw new Error('Fail to update project.')
+  }
 })
 
 // @desc    Delete a project
@@ -92,10 +103,16 @@ const deleteProject = asyncHandler(async (req, res) => {
   }
 
   const deletedProject = await Project.findByIdAndRemove(req.params.id)
-  res.json({
-    message: 'Delete the project with id:' + req.params.id + '.',
-    deletedProject: deletedProject,
-  })
+  if (deletedProject) {
+    res.json({
+      message: 'Delete the project with id:' + req.params.id + '.',
+      deletedProject: deletedProject,
+    })
+  }
+  else {
+    res.status(400)
+    throw new Error('Fail to delete project.')
+  }
 })
 
 module.exports = {

@@ -44,7 +44,7 @@ const registerUser = asyncHandler(async (req, res) => {
   }
   else {
     res.status(400)
-    throw new Error('Invlid register data.')
+    throw new Error('Fail to register.')
   }
 })
 
@@ -75,7 +75,7 @@ const loginUser = asyncHandler(async (req, res) => {
   }
   else {
     res.status(400)
-    throw new Error('Invlid email or password.')
+    throw new Error('Fail to login.')
   }
 
 })
@@ -125,7 +125,7 @@ const updateUser = asyncHandler(async (req, res) => {
   }
   else {
     res.status(400)
-    throw new Error('Invlid update data.')
+    throw new Error('Fail to update user.')
   }
 })
 

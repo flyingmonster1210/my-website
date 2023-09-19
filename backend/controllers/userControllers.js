@@ -129,6 +129,35 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 })
 
+// @desc    Delete a user
+// @route   DELETE /api/user/delete:id
+const deleteUser = asyncHandler(async (req, res) => {
+  const params = req.params
+  const check = isEmpty(params, ['id'])
+  if (check.result) {
+    res.status(400)
+    throw new Error(check.message)
+  }
+
+  const user = await User.findById(params.id)
+  if (!user) {
+    res.status(400)
+    throw new Error('User not found.')
+  }
+
+  const deletedUser = await User.findByIdAndDelete(params.id)
+  if (deletedUser) {
+    res.json({
+      message: 'Delete user with id:' + params.id + '.',
+      deletedUser: deletedUser,
+    })
+  }
+  else {
+    res.status(400)
+    throw new Error('Fail to delete user.')
+  }
+})
+
 // @desc    Get user info
 // @route   GET /api/user/me
 const getMe = asyncHandler(async (req, res) => {
@@ -142,4 +171,5 @@ module.exports = {
   loginUser,
   getMe,
   updateUser,
+  deleteUser,
 }

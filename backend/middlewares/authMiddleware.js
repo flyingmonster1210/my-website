@@ -15,10 +15,10 @@ const protect = asyncHandler(async (req, res, next) => {
 
       // Decode the token, and we will the the object: 
       // {id: userId} which is stored in the generateToken()
-      const decodedObjctFromJWT = jwt.verify(token, process.env.JWT_SECRET)
+      const decodedObjectFromJWT = jwt.verify(token, process.env.JWT_SECRET)
 
       // Put the userObject into the reqest
-      req.user = await User.findOneById(decodedObjctFromJWT.id).select('-password')
+      req.user = await User.findById(decodedObjectFromJWT.id).select('-password')
 
       next()
     } catch (error) {

@@ -164,16 +164,26 @@ const deleteUser = asyncHandler(async (req, res) => {
 // @desc    Get user info
 // @route   GET /api/user/me
 const getMe = asyncHandler(async (req, res) => {
-  if (req.user) {
+  const userId = '65076e3442427d2b8e90ca30'
+  const user = await User.findById(userId)
+  if (user) {
     res.json({
-      message: 'Get this user info.',
-      thisUser: req.user,
+      message: 'Get default user info.',
+      user: {
+        username: user.username,
+        email: user.email,
+        phone: user.phone,
+        linkedin: user.linkedin,
+        github: user.github,
+        introduction: user.introduction,
+      }
     })
   }
   else {
     res.status(400)
-    throw new Error('req.user not found, check the authMiddleware.')
+    throw new Error('Fail to get dafault user info.')
   }
+
 })
 
 const generateToken = (id) => {

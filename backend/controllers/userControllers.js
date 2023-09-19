@@ -164,10 +164,16 @@ const deleteUser = asyncHandler(async (req, res) => {
 // @desc    Get user info
 // @route   GET /api/user/me
 const getMe = asyncHandler(async (req, res) => {
-  res.json({
-    message: 'Get this user info.',
-    thisUser: req.user,
-  })
+  if (req.user) {
+    res.json({
+      message: 'Get this user info.',
+      thisUser: req.user,
+    })
+  }
+  else {
+    res.status(400)
+    throw new Error('req.user not found, check the authMiddleware.')
+  }
 })
 
 const generateToken = (id) => {

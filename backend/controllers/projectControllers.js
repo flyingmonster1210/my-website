@@ -40,6 +40,12 @@ const addProject = asyncHandler(async (req, res) => {
     throw new Error(check.message)
   }
 
+  const isProjectExist = await Project.findOne({ name: req.body.name })
+  if (isProjectExist) {
+    res.status(400)
+    throw new Error('This project\'s name has been used, please use another one.')
+  }
+
   const newProject = await Project.create(req.body)
   if (newProject) {
     res.json({
@@ -49,7 +55,7 @@ const addProject = asyncHandler(async (req, res) => {
   }
   else {
     res.status(400)
-    throw new Error('Fail to add project.')
+    throw new Error('Fail to add this project.')
   }
 })
 

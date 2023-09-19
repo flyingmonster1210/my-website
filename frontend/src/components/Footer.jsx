@@ -5,7 +5,7 @@ import github from '../assets/github.png'
 
 function Footer() {
   return (
-    <div className="flex flex-row  bg-yellow-50 px-12 py-3 font-poppins justify-between mb-2">
+    <div className="flex flex-col  bg-yellow-50 px-12 py-3 font-poppins justify-center items-center mb-2 md:flex-row md:justify-between">
       <div className="flex flex-row items-center space-x-1">
         <img src={telephone} alt="telephone" className="max-h-[16px]" />
         <p>778-522-0441</p>

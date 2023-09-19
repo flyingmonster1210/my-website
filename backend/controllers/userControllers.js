@@ -72,7 +72,7 @@ const loginUser = asyncHandler(async (req, res) => {
         github: user.github,
         introduction: user.introduction,
         _id: user.id,
-        token: generateToken(newUser._id),
+        token: generateToken(user.id),
       }
     })
   }
@@ -165,7 +165,8 @@ const deleteUser = asyncHandler(async (req, res) => {
 // @route   GET /api/user/me
 const getMe = asyncHandler(async (req, res) => {
   res.json({
-    message: 'user getMe',
+    message: 'Get this user info.',
+    thisUser: req.user,
   })
 })
 

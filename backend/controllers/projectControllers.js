@@ -10,7 +10,7 @@ const getAllProjects = asyncHandler(async (req, res) => {
 
   res.json({
     message: 'Get all projects.',
-    allProjects: allProjects,
+    project: allProjects,
   })
 })
 
@@ -50,7 +50,7 @@ const addProject = asyncHandler(async (req, res) => {
   if (newProject) {
     res.json({
       message: 'Add a new project.',
-      newProject: newProject,
+      project: newProject,
     })
   }
   else {
@@ -84,7 +84,7 @@ const updateProject = asyncHandler(async (req, res) => {
   if (updatedProject) {
     res.json({
       message: 'Update the project with id:' + req.params.id + '.',
-      updatedProject: req.body,
+      project: req.body,
     })
   }
   else {
@@ -112,7 +112,7 @@ const deleteProject = asyncHandler(async (req, res) => {
   if (deletedProject) {
     res.json({
       message: 'Delete the project with id:' + req.params.id + '.',
-      deletedProject: deletedProject,
+      project: deletedProject,
     })
   }
   else {

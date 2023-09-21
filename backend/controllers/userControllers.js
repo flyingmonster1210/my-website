@@ -32,7 +32,7 @@ const registerUser = asyncHandler(async (req, res) => {
   if (newUser) {
     res.json({
       message: 'Create a new user.',
-      newUser: {
+      user: {
         username: newUser.username,
         email: newUser.email,
         phone: newUser.phone,
@@ -96,10 +96,15 @@ const updateUser = asyncHandler(async (req, res) => {
     }
   }
 
-  const user = await User.findById(params.id)
-  if (!user) {
+  const findUserById = await User.findById(params.id)
+  if (!findUserById) {
     res.status(400)
     throw new Error('User not found.')
+  }
+  const findUserByEmail = await User.findByOne({ email: body.email })
+  if (findUserByEmail) {
+    res.status(400)
+    throw new Error('This email has been used, please use another one.')
   }
 
   const salt = await bcrypt.genSalt(Number(process.env.SALT))
@@ -115,7 +120,7 @@ const updateUser = asyncHandler(async (req, res) => {
   if (updatedUser) {
     res.json({
       message: 'User info updated.',
-      updatedUser: {
+      user: {
         username: body.username,
         email: body.email,
         phone: body.phone,
@@ -152,7 +157,7 @@ const deleteUser = asyncHandler(async (req, res) => {
   if (deletedUser) {
     res.json({
       message: 'Delete user with id:' + params.id + '.',
-      deletedUser: deletedUser,
+      user: deletedUser,
     })
   }
   else {
@@ -164,6 +169,8 @@ const deleteUser = asyncHandler(async (req, res) => {
 // @desc    Get user info
 // @route   GET /api/user/me
 const getMe = asyncHandler(async (req, res) => {
+  // TODO: Handle the request with id, if it is with id, it should check the token first
+
   const userId = '65076e3442427d2b8e90ca30'
   const user = await User.findById(userId)
   if (user) {

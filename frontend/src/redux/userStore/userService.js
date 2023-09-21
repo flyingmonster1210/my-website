@@ -26,9 +26,9 @@ const login = async (userData) => {
 }
 
 // User logout
-// TODO: After logout, set the default user info into loaclStorage
-const logout = () => {
+const logout = async () => {
   localStorage.removeItem(LOCAL_STORAGE_KEY)
+  return await loadAndSetDefaultUserInfo()
 }
 
 // User update profile
@@ -54,9 +54,8 @@ const loadAndSetDefaultUserInfo = async () => {
 }
 
 // Get user profile by id
+// TODO: Handle the request with id
 const getMe = async () => {
-  // TODO: Handle the request with id
-
   const { data } = await axios.get(API_URL + 'me/')
 
   return (data && data.user) ? data.user : data

@@ -151,10 +151,9 @@ const userSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state, action) => {
         state = {
-          // TODO: Once the user logout, it should load the default user info
           ...initialState,
           isSuccess: true,
-          user: null,
+          user: action.payload,
         }
       })
       .addCase(logout.rejected, (state, action) => {

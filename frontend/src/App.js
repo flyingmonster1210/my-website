@@ -8,20 +8,25 @@ import Spinner from './components/Spinner'
 import LandingPage from './pages/landingPage/LandingPage'
 import ProjectsPage from './pages/projectsPage/ProjectsPage'
 import UserPage from './pages/userPage/UserPage'
-import { loadAndSetDefaultUserInfo, reset } from './redux/userStore/userSlice'
+import { loadAndSetDefaultUserInfo, userReset } from './redux/userStore/userSlice'
+import { loadDefaultProjectList, projectReset } from './redux/projectsStore/projectsSlice'
 
 function App () {
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(loadAndSetDefaultUserInfo())
+    dispatch(loadDefaultProjectList())
 
     return () => {
-      dispatch(reset())
+      dispatch(userReset())
+      dispatch(projectReset())
     }
   }, [dispatch])
 
-  const { isPending } = useSelector((state) => state.user)
+  const user = useSelector((state) => state.user)
+  const projects = useSelector((state) => state.projects)
+  const isPending = user.isPending || projects.isPending
 
   return (
     <>

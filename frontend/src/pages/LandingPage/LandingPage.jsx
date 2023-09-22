@@ -4,11 +4,12 @@ import telephone from '../../assets/telephone.png'
 import email from '../../assets/email.png'
 import linkedin from '../../assets/linkedin.png'
 import github from '../../assets/github.png'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
 
 function LandingPage() {
-  const { user } = useSelector((state) => state.user)
+  let { user } = useSelector((state) => state.user)
+  let { projects } = useSelector((state) => state.projects)
 
   useEffect(() => {
     if (user) {
@@ -24,7 +25,14 @@ function LandingPage() {
           "Test John is a dedicated and experienced software engineer with a passion for solving complex technical challenges. He holds a bachelor's degree in Computer Science and has been working in the software development field for over 10 years.",
       }
     }
-  }, [user])
+
+    // TODO: Set default projects in case projects is empty
+    if (projects) {
+      // console.log(projects)
+    } else {
+      projects = {}
+    }
+  }, [user, projects])
 
   return (
     <div
@@ -44,8 +52,9 @@ function LandingPage() {
           </p>
           <div className="flex flex-col mt-4 text-start text-[16px] md:mt-8">
             <p>{user.introduction}</p>
+            {/* TODO: Change the link to ABOUTME */}
             <a
-              href=""
+              href={user.linkedin}
               className="mt-1 underline font-semibold text-center text-[18px] md:text-start hover:text-gray-500"
             >
               *ABOUT ME
@@ -78,7 +87,20 @@ function LandingPage() {
             <p>Eperience</p>
           </div>
 
-          <div className="flex flex-col text-[16px] mx-4 mt-4">
+          {projects ? (
+            projects.map((project, index) => (
+              <div
+                key={'project' + index}
+                className="flex flex-col text-[16px] mx-4 mt-4"
+              >
+                <p className=" underline underline-offset-4">{project.name}</p>
+                <p>{project.description}</p>
+              </div>
+            ))
+          ) : (
+            <></>
+          )}
+          {/* <div className="flex flex-col text-[16px] mx-4 mt-4">
             <div id="project1">
               <p className=" underline underline-offset-4">Project1's Name</p>
               <p>Description</p>
@@ -90,7 +112,7 @@ function LandingPage() {
               <p className=" underline underline-offset-4">Project's Name</p>
               <p>Description</p>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div id="connect">
@@ -119,6 +141,7 @@ function LandingPage() {
                 className=" border-b  border-black hover:text-gray-500"
                 href={user.linkedin}
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 LinkedIn
               </a>
@@ -129,6 +152,7 @@ function LandingPage() {
                 className="border-b  border-black hover:text-gray-500"
                 href={user.github}
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 GitHub
               </a>

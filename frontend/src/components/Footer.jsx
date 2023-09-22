@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
 
 function Footer() {
-  const { user } = useSelector((state) => state.user)
+  let { user } = useSelector((state) => state.user)
   useEffect(() => {
     if (user) {
       // console.log(user)
@@ -39,13 +39,19 @@ function Footer() {
             className="hover:text-gray-500"
             href={user.linkedin}
             target="_blank"
+            rel="noopener noreferrer"
           >
             LinkedIn
           </a>
         </div>
         <div className="flex flex-row items-center space-x-1">
           <img src={github} alt="telephone" className="max-h-[16px]" />
-          <a className="hover:text-gray-500" href={user.github} target="_blank">
+          <a
+            className="hover:text-gray-500"
+            href={user.github}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             GitHub
           </a>
         </div>

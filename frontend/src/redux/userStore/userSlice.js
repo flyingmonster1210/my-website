@@ -52,7 +52,7 @@ export const logout = createAsyncThunk('user/logout', async (_, thunkAPI) => {
 
 export const loadAndSetDefaultUserInfo = createAsyncThunk('user/loadAndSetDefaultUserInfo', async (userData, thunkAPI) => {
   try {
-    return await userService.loadAndSetDefaultUserInfo(userData)
+    return await userService.loadAndSetDefaultUserInfo()
   } catch (error) {
     const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
     return thunkAPI.rejectWithValue(message)
@@ -63,7 +63,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState: initialState,
   reducers: {
-    reset: (state) => {
+    userReset: (state) => {
       state = {
         ...initialState,
         user: state.user,
@@ -175,5 +175,5 @@ const userSlice = createSlice({
   },
 })
 
-export const { reset } = userSlice.actions
+export const { userReset } = userSlice.actions
 export default userSlice.reducer

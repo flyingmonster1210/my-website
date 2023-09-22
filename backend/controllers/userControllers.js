@@ -101,10 +101,13 @@ const updateUser = asyncHandler(async (req, res) => {
     res.status(400)
     throw new Error('User not found.')
   }
-  const findUserByEmail = await User.findByOne({ email: body.email })
-  if (findUserByEmail) {
-    res.status(400)
-    throw new Error('This email has been used, please use another one.')
+  if (body.email) {
+    const findUserByEmail = await User.findOne({ email: body.email })
+    if (findUserByEmail && findUserByEmail.id !== findUserById.id && findUserByEmail.email === findUserById.email) {
+      console.log(user)
+      res.status(400)
+      throw new Error('This email has been used, please use another one.')
+    }
   }
 
   const salt = await bcrypt.genSalt(Number(process.env.SALT))

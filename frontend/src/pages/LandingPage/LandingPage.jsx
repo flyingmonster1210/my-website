@@ -4,8 +4,28 @@ import telephone from '../../assets/telephone.png'
 import email from '../../assets/email.png'
 import linkedin from '../../assets/linkedin.png'
 import github from '../../assets/github.png'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
 
 function LandingPage() {
+  const { user } = useSelector((state) => state.user)
+
+  useEffect(() => {
+    if (user) {
+      // console.log('user: ', user)
+    } else {
+      user = {
+        email: 'waynezeng1210@gmail.com',
+        github: 'https://github.com/flyingmonster1210',
+        linkedin: 'https://www.linkedin.com/in/weijie-zeng-18b31b212/',
+        phone: '778-522-0441',
+        username: 'Wayne Zeng',
+        introduction:
+          "Test John is a dedicated and experienced software engineer with a passion for solving complex technical challenges. He holds a bachelor's degree in Computer Science and has been working in the software development field for over 10 years.",
+      }
+    }
+  }, [user])
+
   return (
     <div
       id="landing-page"
@@ -23,15 +43,10 @@ function LandingPage() {
             TITLE
           </p>
           <div className="flex flex-col mt-4 text-start text-[16px] md:mt-8">
-            <p>
-              John is a dedicated and experienced software engineer with a
-              passion for solving complex technical challenges. He holds a
-              bachelor's degree in Computer Science and has been working in the
-              software development field for over 10 years.
-            </p>
+            <p>{user.introduction}</p>
             <a
               href=""
-              className="mt-1 underline font-semibold text-center text-[18px] md:text-start"
+              className="mt-1 underline font-semibold text-center text-[18px] md:text-start hover:text-gray-500"
             >
               *ABOUT ME
             </a>
@@ -90,21 +105,19 @@ function LandingPage() {
           <div className="flex flex-col text-[16px] m-4 space-y-2">
             <div className="flex flex-row items-center space-x-1">
               <img src={telephone} alt="telephone" className="max-h-[16px]" />
-              <p className=" border-b  border-black">778-522-0441</p>
+              <p className=" border-b  border-black">{user.phone}</p>
             </div>
             <div className="flex flex-row items-center space-x-1">
               <img src={email} alt="telephone" className="max-h-[16px]" />
-              <a className=" break-all" href="waynezeng1210@gmail.com">
-                <span className="border-b  border-black">
-                  waynezeng1210@gmail.com
-                </span>
-              </a>
+              <span className="border-b  border-black break-all">
+                {user.email}
+              </span>
             </div>
             <div className="flex flex-row items-center space-x-1">
               <img src={linkedin} alt="telephone" className="max-h-[16px]" />
               <a
-                className=" border-b  border-black"
-                href="https://www.linkedin.com/in/weijie-zeng-18b31b212/"
+                className=" border-b  border-black hover:text-gray-500"
+                href={user.linkedin}
                 target="_blank"
               >
                 LinkedIn
@@ -112,7 +125,11 @@ function LandingPage() {
             </div>
             <div className="flex flex-row items-center space-x-1">
               <img src={github} alt="telephone" className="max-h-[16px]" />
-              <a className="border-b  border-black" href="" target="_blank">
+              <a
+                className="border-b  border-black hover:text-gray-500"
+                href={user.github}
+                target="_blank"
+              >
                 GitHub
               </a>
             </div>

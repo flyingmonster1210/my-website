@@ -16,7 +16,14 @@ function Header() {
       >
         Home
       </button>
-      <button className="hover:text-gray-500">Login</button>
+      <button
+        className="hover:text-gray-500"
+        onClick={() => {
+          navigate('/user')
+        }}
+      >
+        Login
+      </button>
     </div>
   )
 }

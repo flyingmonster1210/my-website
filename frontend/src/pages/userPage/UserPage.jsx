@@ -1,5 +1,5 @@
 const UserPage = () => {
-  return <div>UserPage</div>
+  return <div id="user-page">UserPage</div>
 }
 
 export default UserPage

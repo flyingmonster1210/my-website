@@ -1,15 +1,67 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { login } from '../../redux/userStore/userSlice'
+import { Alert } from '../../components/Alert'
 
 function Login() {
-  const [formData, setFormData] = useState({ email: '', password: '' })
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  const onSubmit = () => {}
+  const [formData, setFormData] = useState({ email: '', password: '' })
+  const { email, password } = formData
+
+  const [showAlert, setShowAlert] = useState({
+    show: false,
+    type: '',
+    title: '',
+    message: '',
+  })
+
+  const onChange = (e) => {
+    setFormData((state) => ({
+      ...state,
+      [e.target.id]: e.target.value,
+    }))
+  }
+
+  const onSubmit = async (e) => {
+    e.preventDefault()
+
+    const userData = { email, password }
+    try {
+      await dispatch(login(userData)).unwrap()
+      setShowAlert({
+        show: true,
+        type: 'fullfilled',
+        title: 'Success',
+        message: 'Login Success!',
+      })
+      navigate('/user/')
+    } catch (error) {
+      setShowAlert({
+        show: true,
+        type: 'rejected',
+        title: 'Fail',
+        message: 'Login Fail!',
+      })
+      console.log(error)
+    }
+  }
 
   return (
     <div
       id="login-page"
       className="flex flex-col items-center bg-yellow-50 px-12 py-3 font-poppins"
     >
+      {/* TODO: Show Alert, page refresh because of the dispatch in onSubmit */}
+      {/* {showAlert.show ? (
+        <Alert
+          type={showAlert.type}
+          title={showAlert.title}
+          message={showAlert.message}
+        />
+      ) : null} */}
       <div className="w-full max-w-xs">
         <form
           onSubmit={onSubmit}
@@ -18,15 +70,17 @@ function Login() {
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="username"
+              htmlFor="email"
             >
-              Username
+              Email
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username"
+              id="email"
               type="text"
-              placeholder="Username"
+              placeholder="Email"
+              value={email}
+              onChange={onChange}
             />
           </div>
           <div className="mb-6">
@@ -41,6 +95,8 @@ function Login() {
               id="password"
               type="password"
               placeholder="******************"
+              value={password}
+              onChange={onChange}
             />
             <p className="text-red-500 text-xs italic">
               Please choose a password.
@@ -48,8 +104,9 @@ function Login() {
           </div>
           <div className="flex justify-center">
             <button
+              // onClick={onSubmit}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="button"
+              type="submit"
             >
               Sign In
             </button>

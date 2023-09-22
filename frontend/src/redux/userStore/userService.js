@@ -5,7 +5,7 @@ const LOCAL_STORAGE_KEY = 'user'
 
 // User register
 const register = async (userData) => {
-  const { data } = await axios.post(API_URL + 'register', userData)
+  const { data } = await axios.post(API_URL + 'register/', userData)
 
   if (data && data.user) {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data.user))

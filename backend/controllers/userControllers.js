@@ -61,24 +61,30 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 
   const user = await User.findOne({ email: body.email })
-  if (user && (await bcrypt.compare(body.password, user.password))) {
-    res.json({
-      message: 'User login.',
-      user: {
-        username: user.username,
-        email: user.email,
-        phone: user.phone,
-        linkedin: user.linkedin,
-        github: user.github,
-        introduction: user.introduction,
-        _id: user.id,
-        token: generateToken(user.id),
-      }
-    })
+  if (user) {
+    if (await bcrypt.compare(body.password, user.password)) {
+      res.json({
+        message: 'User login.',
+        user: {
+          username: user.username,
+          email: user.email,
+          phone: user.phone,
+          linkedin: user.linkedin,
+          github: user.github,
+          introduction: user.introduction,
+          _id: user.id,
+          token: generateToken(user.id),
+        }
+      })
+    }
+    else {
+      res.status(400)
+      throw new Error('Password is incorrect.')
+    }
   }
   else {
     res.status(400)
-    throw new Error('Fail to login.')
+    throw new Error('Email not found.')
   }
 
 })

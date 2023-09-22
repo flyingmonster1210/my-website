@@ -11,23 +11,19 @@ import UserPage from './pages/userPage/UserPage'
 import { loadAndSetDefaultUserInfo, userReset } from './redux/userStore/userSlice'
 import { loadDefaultProjectList, projectReset } from './redux/projectsStore/projectsSlice'
 
-let THE_FIRST_TIME_TO_RUN = true
 
 function App () {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (THE_FIRST_TIME_TO_RUN) {
-      dispatch(loadAndSetDefaultUserInfo())
-      dispatch(loadDefaultProjectList())
-      THE_FIRST_TIME_TO_RUN = false
-    }
+    dispatch(loadAndSetDefaultUserInfo())
+    dispatch(loadDefaultProjectList())
 
     return () => {
       dispatch(userReset())
       dispatch(projectReset())
     }
-  }, [dispatch])
+  }, [])
 
   const user = useSelector((state) => state.user)
   const projects = useSelector((state) => state.projects)

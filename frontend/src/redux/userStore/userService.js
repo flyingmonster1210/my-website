@@ -42,7 +42,7 @@ const update = async (userId, userData) => {
   return (data && data.user) ? data.user : data
 }
 
-// get and set the default user info into the localStorage
+// Get and set the default user info into the localStorage
 const loadAndSetDefaultUserInfo = async () => {
   const { data } = await axios.get(API_URL + 'me/')
 

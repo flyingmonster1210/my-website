@@ -6,7 +6,7 @@ function Header() {
   return (
     <div
       id="header"
-      className="flex flex-row justify-between items-center bg-yellow-50 px-12 py-3 font-poppins text-[15px] font-semibold"
+      className="flex flex-row justify-between items-center bg-yellow-50 px-12 py-3 font-poppins text-[14px] font-semibold md:text-[18px]"
     >
       <button
         className="hover:text-gray-500"

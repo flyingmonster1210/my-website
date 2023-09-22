@@ -74,118 +74,103 @@ const userSlice = createSlice({
     builder
       // register
       .addCase(register.pending, (state) => {
-        state = {
-          ...initialState,
-          isPending: true,
-          user: state.user,
-        }
+        state.isError = false
+        state.isSuccess = false
+        state.isPending = true
+        state.message = ''
       })
       .addCase(register.fulfilled, (state, action) => {
-        state = {
-          ...initialState,
-          isSuccess: true,
-          user: action.payload,
-        }
+        state.isError = false
+        state.isSuccess = true
+        state.isPending = false
+        state.user = action.payload
+        state.message = ''
       })
       .addCase(register.rejected, (state, action) => {
-        state = {
-          ...initialState,
-          isError: true,
-          user: state.user,
-          errorMessage: action.payload,
-        }
+        state.isError = true
+        state.isSuccess = false
+        state.isPending = false
+        state.message = action.payload
       })
       // login
       .addCase(login.pending, (state) => {
-        state = {
-          ...initialState,
-          isPending: true,
-          user: state.user,
-        }
+        state.isError = false
+        state.isSuccess = false
+        state.isPending = true
+        state.message = ''
       })
       .addCase(login.fulfilled, (state, action) => {
-        state = {
-          ...initialState,
-          isSuccess: true,
-          user: action.payload,
-        }
+        state.isError = false
+        state.isSuccess = true
+        state.isPending = false
+        state.user = action.payload
+        state.message = ''
       })
       .addCase(login.rejected, (state, action) => {
-        state = {
-          ...initialState,
-          isError: true,
-          user: state.user,
-          errorMessage: action.payload,
-        }
+        state.isError = true
+        state.isSuccess = false
+        state.isPending = false
+        state.message = action.payload
       })
       // update
-      .addCase(login.pending, (state) => {
-        state = {
-          ...initialState,
-          isPending: true,
-          user: state.user,
-        }
+      .addCase(update.pending, (state) => {
+        state.isError = false
+        state.isSuccess = false
+        state.isPending = true
+        state.message = ''
       })
-      .addCase(login.fulfilled, (state, action) => {
-        state = {
-          ...initialState,
-          isSuccess: true,
-          user: action.payload,
-        }
+      .addCase(update.fulfilled, (state, action) => {
+        state.isError = false
+        state.isSuccess = true
+        state.isPending = false
+        state.user = action.payload
+        state.message = ''
       })
-      .addCase(login.rejected, (state, action) => {
-        state = {
-          ...initialState,
-          isError: true,
-          user: state.user,
-          errorMessage: action.payload,
-        }
+      .addCase(update.rejected, (state, action) => {
+        state.isError = true
+        state.isSuccess = false
+        state.isPending = false
+        state.message = action.payload
       })
       // logout
       .addCase(logout.pending, (state) => {
-        state = {
-          ...initialState,
-          isPending: true,
-          user: state.user,
-        }
+        state.isError = false
+        state.isSuccess = false
+        state.isPending = true
+        state.message = ''
       })
       .addCase(logout.fulfilled, (state, action) => {
-        state = {
-          ...initialState,
-          isSuccess: true,
-          user: action.payload,
-        }
+        state.isError = false
+        state.isSuccess = true
+        state.isPending = false
+        state.user = action.payload
+        state.message = ''
       })
       .addCase(logout.rejected, (state, action) => {
-        state = {
-          ...initialState,
-          isError: true,
-          user: state.user,
-          errorMessage: action.payload,
-        }
+        state.isError = true
+        state.isSuccess = false
+        state.isPending = false
+        state.message = action.payload
       })
       // loadAndSetDefaultUserInfo
       .addCase(loadAndSetDefaultUserInfo.pending, (state) => {
-        state = {
-          ...initialState,
-          isPending: true,
-          user: state.user,
-        }
+        state.isError = false
+        state.isSuccess = false
+        state.isPending = true
+        state.message = ''
       })
       .addCase(loadAndSetDefaultUserInfo.fulfilled, (state, action) => {
-        state = {
-          ...initialState,
-          isSuccess: true,
-          user: action.payload,
-        }
+        state.isError = false
+        state.isSuccess = true
+        state.isPending = false
+        state.user = action.payload
+        state.message = ''
       })
       .addCase(loadAndSetDefaultUserInfo.rejected, (state, action) => {
-        state = {
-          ...initialState,
-          isError: true,
-          user: state.user,
-          errorMessage: action.payload,
-        }
+        state.isError = true
+        state.isSuccess = false
+        state.isPending = false
+        state.message = action.payload
       })
   },
 })

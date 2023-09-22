@@ -10,6 +10,7 @@ import ProjectsPage from './pages/projectsPage/ProjectsPage'
 import UserPage from './pages/userPage/UserPage'
 import { loadAndSetDefaultUserInfo, userReset } from './redux/userStore/userSlice'
 import { loadDefaultProjectList, projectReset } from './redux/projectsStore/projectsSlice'
+import Login from './pages/loginPage/Login'
 
 
 function App () {
@@ -37,6 +38,7 @@ function App () {
           {isPending ? <Spinner /> :
             <Routes>
               <Route path='/' element={<LandingPage />} />
+              <Route path='/login' element={<Login />} />
               <Route path='/projects' element={<ProjectsPage />} />
               <Route path='/user' element={<UserPage />} />
             </Routes>

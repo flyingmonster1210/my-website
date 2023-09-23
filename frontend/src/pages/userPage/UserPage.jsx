@@ -22,7 +22,7 @@ const UserPage = () => {
   })
 
   useEffect(() => {
-    if (!userStore.isError && user && user.token) {
+    if (user && user.token) {
       setFormData(user)
     } else {
       console.log(user)

@@ -7,18 +7,14 @@ import { useEffect } from 'react'
 
 function Footer() {
   let { user } = useSelector((state) => state.user)
-  useEffect(() => {
-    if (user) {
-      // console.log(user)
-    } else {
-      user = {
+  user = user
+    ? user
+    : {
         email: 'waynezeng1210@gmail.com',
         github: 'https://github.com/flyingmonster1210',
         linkedin: 'https://www.linkedin.com/in/weijie-zeng-18b31b212/',
         phone: '778-522-0441',
       }
-    }
-  }, [user])
 
   return (
     <div className="flex flex-col  bg-yellow-50 px-12 py-3 font-poppins justify-center items-center mb-2 md:flex-row md:justify-between">

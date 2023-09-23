@@ -7,8 +7,14 @@ import github from '../../assets/github.png'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import Spinner from '../../components/Spinner'
-import { loadAndSetDefaultUserInfo } from '../../redux/userStore/userSlice'
-import { loadDefaultProjectList } from '../../redux/projectsStore/projectsSlice'
+import {
+  loadAndSetDefaultUserInfo,
+  userReset,
+} from '../../redux/userStore/userSlice'
+import {
+  loadDefaultProjectList,
+  projectReset,
+} from '../../redux/projectsStore/projectsSlice'
 
 function LandingPage() {
   const dispatch = useDispatch()
@@ -23,12 +29,25 @@ function LandingPage() {
       dispatch(loadAndSetDefaultUserInfo())
       dispatch(loadDefaultProjectList())
     }
+    return () => {
+      dispatch(userReset)
+      dispatch(projectReset)
+    }
   }, [])
 
   const isPending = projectsStore.isPending || userStore.isPending
   if (isPending) {
     return <Spinner />
   }
+
+  user = user
+    ? user
+    : {
+        email: 'waynezeng1210@gmail.com',
+        github: 'https://github.com/flyingmonster1210',
+        linkedin: 'https://www.linkedin.com/in/weijie-zeng-18b31b212/',
+        phone: '778-522-0441',
+      }
 
   return (
     <div

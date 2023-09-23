@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../../redux/userStore/userSlice'
@@ -9,8 +9,23 @@ function Login() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const [formData, setFormData] = useState({ email: '', password: '' })
-  const { email, password } = formData
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    checkbox: false,
+  })
+
+  const { email, password, checkbox } = formData
+  useEffect(() => {
+    const previousUserInfo = JSON.parse(localStorage.getItem('loginInfo'))
+    if (previousUserInfo) {
+      setFormData({
+        email: previousUserInfo.email,
+        password: previousUserInfo.password,
+        checkbox: true,
+      })
+    }
+  }, [])
 
   const [showAlert, setShowAlert] = useState({
     show: false,
@@ -22,7 +37,8 @@ function Login() {
   const onChange = (e) => {
     setFormData((state) => ({
       ...state,
-      [e.target.id]: e.target.value,
+      [e.target.id]:
+        e.target.id === 'checkbox' ? e.target.checked : e.target.value,
     }))
   }
 
@@ -38,6 +54,11 @@ function Login() {
         title: 'Success',
         message: 'Login Success!',
       })
+      if (checkbox) {
+        localStorage.setItem('loginInfo', JSON.stringify(userData))
+      } else {
+        localStorage.removeItem('loginInfo')
+      }
       navigate('/user/')
     } catch (error) {
       setShowAlert({
@@ -91,7 +112,7 @@ function Login() {
               onChange={onChange}
             />
           </div>
-          <div className="mb-6">
+          <div className="mb-1">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="password"
@@ -106,9 +127,21 @@ function Login() {
               value={password}
               onChange={onChange}
             />
-            <p className="text-red-500 text-xs italic">
-              Please choose a password.
-            </p>
+          </div>
+          <div className="flex items-center mb-4">
+            <input
+              id="checkbox"
+              type="checkbox"
+              checked={checkbox}
+              onChange={onChange}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+            <label
+              htmlFor="checkbox"
+              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-500"
+            >
+              Remeber me
+            </label>
           </div>
           <div className="flex justify-center">
             <button

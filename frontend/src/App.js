@@ -9,7 +9,7 @@ import ProjectsPage from './pages/projectsPage/ProjectsPage'
 import UserPage from './pages/userPage/UserPage'
 import { loadAndSetDefaultUserInfo, userReset } from './redux/userStore/userSlice'
 import { loadDefaultProjectList, projectReset } from './redux/projectsStore/projectsSlice'
-import Login from './pages/loginPage/Login'
+import LoginPage from './pages/loginPage/LoginPage'
 
 
 function App () {
@@ -32,7 +32,7 @@ function App () {
           <Header />
           <Routes>
             <Route path='/' element={<LandingPage />} />
-            <Route path='/login' element={<Login />} />
+            <Route path='/login' element={<LoginPage />} />
             <Route path='/projects' element={<ProjectsPage />} />
             <Route path='/user' element={<UserPage />} />
           </Routes>

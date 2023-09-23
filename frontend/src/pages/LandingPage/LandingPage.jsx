@@ -30,8 +30,8 @@ function LandingPage() {
       dispatch(loadDefaultProjectList())
     }
     return () => {
-      dispatch(userReset)
-      dispatch(projectReset)
+      dispatch(userReset())
+      dispatch(projectReset())
     }
   }, [])
 

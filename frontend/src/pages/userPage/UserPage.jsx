@@ -3,7 +3,7 @@ import avatar from '../../assets/avatar.jpg'
 import { useEffect, useState } from 'react'
 import Spinner from '../../components/Spinner'
 import { useNavigate } from 'react-router-dom'
-import { update } from '../../redux/userStore/userSlice'
+import { update, userReset } from '../../redux/userStore/userSlice'
 
 const UserPage = () => {
   const navigate = useNavigate()
@@ -27,6 +27,9 @@ const UserPage = () => {
     } else {
       console.log(user)
       navigate('/login/')
+    }
+    return () => {
+      dispatch(userReset())
     }
   }, [navigate, user, userStore])
 

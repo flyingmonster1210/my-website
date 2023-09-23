@@ -3,7 +3,6 @@ import email from '../assets/email.png'
 import linkedin from '../assets/linkedin.png'
 import github from '../assets/github.png'
 import { useSelector } from 'react-redux'
-import { useEffect } from 'react'
 
 function Footer() {
   let { user } = useSelector((state) => state.user)

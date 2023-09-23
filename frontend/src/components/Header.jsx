@@ -1,7 +1,11 @@
-import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 function Header() {
   const navigate = useNavigate()
+  const url = useLocation().pathname
+  const { user } = useSelector((state) => state.user)
+  const { token } = user
 
   return (
     <div
@@ -16,14 +20,16 @@ function Header() {
       >
         Home
       </button>
-      <button
-        className="hover:text-gray-500"
-        onClick={() => {
-          navigate('/login')
-        }}
-      >
-        Login
-      </button>
+      {url.includes('user') ? null : (
+        <button
+          className="hover:text-gray-500"
+          onClick={() => {
+            navigate('/login')
+          }}
+        >
+          {token ? 'Logout' : 'Login'}
+        </button>
+      )}
     </div>
   )
 }

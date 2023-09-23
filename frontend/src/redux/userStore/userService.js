@@ -53,11 +53,19 @@ const loadAndSetDefaultUserInfo = async () => {
   return (data && data.user) ? data.user : data
 }
 
-// Get user profile by id
-// TODO: Handle the request with id
+const getUserById = async (userId) => {
+  const { data } = await axios.get(API_URL + '/get/' + userId)
+
+  if (data && data.user) {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data.user))
+  }
+
+  return (data && data.user) ? data.user : data
+}
+
+// Get default user profile
 const getMe = async () => {
   const { data } = await axios.get(API_URL + 'me/')
-
   return (data && data.user) ? data.user : data
 }
 
@@ -67,6 +75,7 @@ const userService = {
   logout,
   update,
   getMe,
+  getUserById,
   loadAndSetDefaultUserInfo,
 }
 

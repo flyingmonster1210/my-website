@@ -50,6 +50,15 @@ export const logout = createAsyncThunk('user/logout', async (_, thunkAPI) => {
   }
 })
 
+export const getUserById = createAsyncThunk('user/getUserById', async (userId, thunkAPI) => {
+  try {
+    return await userService.getUserById(userId)
+  } catch (error) {
+    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
 export const loadAndSetDefaultUserInfo = createAsyncThunk('user/loadAndSetDefaultUserInfo', async (userData, thunkAPI) => {
   try {
     return await userService.loadAndSetDefaultUserInfo()
@@ -147,6 +156,26 @@ const userSlice = createSlice({
         state.message = ''
       })
       .addCase(logout.rejected, (state, action) => {
+        state.isError = true
+        state.isSuccess = false
+        state.isPending = false
+        state.message = action.payload
+      })
+      // getUserById
+      .addCase(getUserById.pending, (state) => {
+        state.isError = false
+        state.isSuccess = false
+        state.isPending = true
+        state.message = ''
+      })
+      .addCase(getUserById.fulfilled, (state, action) => {
+        state.isError = false
+        state.isSuccess = true
+        state.isPending = false
+        state.user = action.payload
+        state.message = ''
+      })
+      .addCase(getUserById.rejected, (state, action) => {
         state.isError = true
         state.isSuccess = false
         state.isPending = false

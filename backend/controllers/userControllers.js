@@ -90,7 +90,7 @@ const loginUser = asyncHandler(async (req, res) => {
 })
 
 // @desc    Update user info
-// @route   PUT /api/user/update:id
+// @route   PUT /api/user/update/:id
 const updateUser = asyncHandler(async (req, res) => {
   const body = req.body
   const params = req.params
@@ -147,7 +147,7 @@ const updateUser = asyncHandler(async (req, res) => {
 })
 
 // @desc    Delete a user
-// @route   DELETE /api/user/delete:id
+// @route   DELETE /api/user/delete/:id
 const deleteUser = asyncHandler(async (req, res) => {
   const params = req.params
   const check = isEmpty(params, ['id'])
@@ -176,10 +176,39 @@ const deleteUser = asyncHandler(async (req, res) => {
 })
 
 // @desc    Get user info
+// @route   GET /api/user/get/:id
+const getUser = asyncHandler(async (req, res) => {
+  const params = req.params
+  const check = isEmpty(params, ['id'])
+  if (check.result) {
+    res.status(400)
+    throw new Error(check.message)
+  }
+
+  const user = await User.findById(params.id)
+  if (user) {
+    res.json({
+      message: 'Get user info.',
+      user: {
+        username: user.username,
+        email: user.email,
+        phone: user.phone,
+        linkedin: user.linkedin,
+        github: user.github,
+        introduction: user.introduction,
+      }
+    })
+  }
+  else {
+    res.status(400)
+    throw new Error('User not found.')
+  }
+
+})
+
+// @desc    Get user info
 // @route   GET /api/user/me
 const getMe = asyncHandler(async (req, res) => {
-  // TODO: Handle the request with id, if it is with id, it should check the token first
-
   const userId = '65076e3442427d2b8e90ca30'
   const user = await User.findById(userId)
   if (user) {
@@ -213,6 +242,7 @@ const generateToken = (id) => {
 module.exports = {
   registerUser,
   loginUser,
+  getUser,
   getMe,
   updateUser,
   deleteUser,

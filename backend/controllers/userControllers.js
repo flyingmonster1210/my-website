@@ -94,13 +94,12 @@ const loginUser = asyncHandler(async (req, res) => {
 const updateUser = asyncHandler(async (req, res) => {
   const body = req.body
   const params = req.params
-  const check = [isEmpty(params, ['id']), isEmpty(body, ['username'])]
-  for (let i = 0; i < check.length; i++) {
-    if (check[i].result) {
-      res.status(400)
-      throw new Error(check[i].message)
-    }
+  const check = isEmpty(params, ['id'])
+  if (check.result) {
+    res.status(400)
+    throw new Error(check.message)
   }
+
 
   const findUserById = await User.findById(params.id)
   if (!findUserById) {
@@ -110,32 +109,18 @@ const updateUser = asyncHandler(async (req, res) => {
   if (body.email) {
     const findUserByEmail = await User.findOne({ email: body.email })
     if (findUserByEmail && findUserByEmail.id !== findUserById.id && findUserByEmail.email === findUserById.email) {
-      console.log(user)
       res.status(400)
       throw new Error('This email has been used, please use another one.')
     }
   }
 
-  const salt = await bcrypt.genSalt(Number(process.env.SALT))
-  const hashPassword = await bcrypt.hash(body.password, salt)
-  const updatedUser = await User.findByIdAndUpdate(
-    params.id,
-    {
-      ...body,
-      password: hashPassword,
-    }
-  )
+  const updatedUser = await User.findByIdAndUpdate(params.id, body)
 
   if (updatedUser) {
     res.json({
       message: 'User info updated.',
       user: {
-        username: body.username,
-        email: body.email,
-        phone: body.phone,
-        linkedin: body.linkedin,
-        github: body.github,
-        introduction: body.introduction,
+        ...body,
         _id: params.id,
       },
     })

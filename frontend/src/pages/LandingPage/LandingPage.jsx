@@ -4,38 +4,24 @@ import telephone from '../../assets/telephone.png'
 import email from '../../assets/email.png'
 import linkedin from '../../assets/linkedin.png'
 import github from '../../assets/github.png'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import Spinner from '../../components/Spinner'
+import { loadAndSetDefaultUserInfo } from '../../redux/userStore/userSlice'
+import { loadDefaultProjectList } from '../../redux/projectsStore/projectsSlice'
 
 function LandingPage() {
+  const dispatch = useDispatch()
+
   let userStore = useSelector((state) => state.user)
   let user = userStore.user
   let projectsStore = useSelector((state) => state.projects)
   let projects = projectsStore.projects
 
   useEffect(() => {
-    if (user) {
-      // console.log('user: ', user)
-    } else {
-      user = {
-        email: 'waynezeng1210@gmail.com',
-        github: 'https://github.com/flyingmonster1210',
-        linkedin: 'https://www.linkedin.com/in/weijie-zeng-18b31b212/',
-        phone: '778-522-0441',
-        username: 'Wayne Zeng',
-        introduction:
-          "Test John is a dedicated and experienced software engineer with a passion for solving complex technical challenges. He holds a bachelor's degree in Computer Science and has been working in the software development field for over 10 years.",
-      }
-    }
-
-    // TODO: Set default projects in case projects is empty
-    if (projects) {
-      // console.log('projects:', projects)
-    } else {
-      projects = {}
-    }
-  }, [user, projects])
+    dispatch(loadAndSetDefaultUserInfo())
+    dispatch(loadDefaultProjectList())
+  }, [])
 
   const isPending = projectsStore.isPending || userStore.isPending
   if (isPending) {
@@ -84,7 +70,7 @@ function LandingPage() {
 
       <div
         id="section2"
-        className="grid grid-cols-1 gap-3 w-[90%] mt-10 justify-between items-center sm:grid-cols-2 sm:items-start md:mt-14"
+        className="grid grid-cols-1 gap-3 w-[90%] my-5 justify-between items-center sm:grid-cols-2 sm:items-start md:my-8"
       >
         <div id="experience">
           <div
@@ -99,7 +85,7 @@ function LandingPage() {
             projects.map((project, index) => (
               <div
                 key={'project' + index}
-                className="flex flex-col text-[16px] mx-4 mt-4"
+                className="flex flex-col text-[16px] mx-4 mt-2"
               >
                 <p className=" underline underline-offset-4">{project.name}</p>
                 <p>{project.description}</p>
@@ -108,19 +94,6 @@ function LandingPage() {
           ) : (
             <></>
           )}
-          {/* <div className="flex flex-col text-[16px] mx-4 mt-4">
-            <div id="project1">
-              <p className=" underline underline-offset-4">Project1's Name</p>
-              <p>Description</p>
-            </div>
-          </div>
-
-          <div className="flex flex-col text-[16px] mx-4 mt-4">
-            <div id="project2">
-              <p className=" underline underline-offset-4">Project's Name</p>
-              <p>Description</p>
-            </div>
-          </div> */}
         </div>
 
         <div id="connect">

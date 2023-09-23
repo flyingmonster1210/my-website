@@ -15,15 +15,15 @@ import Login from './pages/loginPage/Login'
 function App () {
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    dispatch(loadAndSetDefaultUserInfo())
-    dispatch(loadDefaultProjectList())
+  // useEffect(() => {
+  //   dispatch(loadAndSetDefaultUserInfo())
+  //   dispatch(loadDefaultProjectList())
 
-    return () => {
-      dispatch(userReset())
-      dispatch(projectReset())
-    }
-  }, [])
+  //   return () => {
+  //     dispatch(userReset())
+  //     dispatch(projectReset())
+  //   }
+  // }, [])
 
   return (
     <>

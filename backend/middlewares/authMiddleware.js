@@ -5,13 +5,13 @@ const User = require('../models/userModel')
 const protect = asyncHandler(async (req, res, next) => {
   let token
 
-  // For each request we need put the authorization in the headers, 
+  // For each request we need put the autorization in the headers, 
   // so that we can verify if it is a acceptable jwt
-  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+  if (req.headers.autorization && req.headers.autorization.startsWith('Bearer')) {
     try {
       // We will use the Bearer token which looks like:
       // 'Bearer xxx', xxx is the token we want.
-      token = req.headers.authorization.split(' ')[1]
+      token = req.headers.autorization.split(' ')[1]
 
       // Decode the token, and we will the the object: 
       // {id: userId} which is stored in the generateToken()

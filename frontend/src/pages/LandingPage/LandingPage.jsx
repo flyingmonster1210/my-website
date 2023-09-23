@@ -19,8 +19,10 @@ function LandingPage() {
   let projects = projectsStore.projects
 
   useEffect(() => {
-    dispatch(loadAndSetDefaultUserInfo())
-    dispatch(loadDefaultProjectList())
+    if (!userStore || !user || !projectsStore || !projects) {
+      dispatch(loadAndSetDefaultUserInfo())
+      dispatch(loadDefaultProjectList())
+    }
   }, [])
 
   const isPending = projectsStore.isPending || userStore.isPending

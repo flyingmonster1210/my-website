@@ -12,7 +12,6 @@ const UserPage = () => {
   const userStore = useSelector((state) => state.user)
   const projectsStore = useSelector((state) => state.projects)
   const user = userStore.user
-  const projects = projectsStore.projects
 
   const [formData, setFormData] = useState({
     phone: '',

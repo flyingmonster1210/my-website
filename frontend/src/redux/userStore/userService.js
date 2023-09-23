@@ -32,8 +32,9 @@ const logout = async () => {
 }
 
 // User update profile
-const update = async (userId, userData) => {
-  const { data } = await axios.put(API_URL + 'update/' + userId, userData)
+const update = async (userId, userData, token) => {
+  const config = { headers: { Autorization: `Bearer ${token}` } }
+  const { data } = await axios.put(API_URL + 'update/' + userId, userData, config)
 
   if (data && data.user) {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data.user))
@@ -53,8 +54,9 @@ const loadAndSetDefaultUserInfo = async () => {
   return (data && data.user) ? data.user : data
 }
 
-const getUserById = async (userId) => {
-  const { data } = await axios.get(API_URL + '/get/' + userId)
+const getUserById = async (userId, token) => {
+  const config = { headers: { Autorization: `Bearer ${token}` } }
+  const { data } = await axios.get(API_URL + '/get/' + userId, config)
 
   if (data && data.user) {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data.user))

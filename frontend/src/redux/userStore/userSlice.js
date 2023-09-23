@@ -33,8 +33,9 @@ export const login = createAsyncThunk('user/login', async (userData, thunkAPI) =
 // userDataWithId = { id: xxx, userData: {xxx} }
 export const update = createAsyncThunk('user/update', async (userDataWithId, thunkAPI) => {
   try {
+    const token = thunkAPI.getState().user.user.token
     const { id, userData } = userDataWithId
-    return await userService.update(id, userData)
+    return await userService.update(id, userData, token)
   } catch (error) {
     const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
     return thunkAPI.rejectWithValue(message)
@@ -52,7 +53,8 @@ export const logout = createAsyncThunk('user/logout', async (_, thunkAPI) => {
 
 export const getUserById = createAsyncThunk('user/getUserById', async (userId, thunkAPI) => {
   try {
-    return await userService.getUserById(userId)
+    const token = thunkAPI.getState().user.user.token
+    return await userService.getUserById(userId, token)
   } catch (error) {
     const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
     return thunkAPI.rejectWithValue(message)

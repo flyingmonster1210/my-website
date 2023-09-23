@@ -6,10 +6,13 @@ import linkedin from '../../assets/linkedin.png'
 import github from '../../assets/github.png'
 import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
+import Spinner from '../../components/Spinner'
 
 function LandingPage() {
-  let { user } = useSelector((state) => state.user)
-  let { projects } = useSelector((state) => state.projects)
+  let userStore = useSelector((state) => state.user)
+  let user = userStore.user
+  let projectsStore = useSelector((state) => state.projects)
+  let projects = projectsStore.projects
 
   useEffect(() => {
     if (user) {
@@ -28,11 +31,16 @@ function LandingPage() {
 
     // TODO: Set default projects in case projects is empty
     if (projects) {
-      // console.log(projects)
+      // console.log('projects:', projects)
     } else {
       projects = {}
     }
   }, [user, projects])
+
+  const isPending = projectsStore.isPending || userStore.isPending
+  if (isPending) {
+    return <Spinner />
+  }
 
   return (
     <div

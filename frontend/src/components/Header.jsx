@@ -19,7 +19,7 @@ function Header() {
       <button
         className="hover:text-gray-500"
         onClick={() => {
-          navigate('/user')
+          navigate('/login')
         }}
       >
         Login

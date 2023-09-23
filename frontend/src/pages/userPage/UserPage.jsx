@@ -1,8 +1,29 @@
 import { useSelector } from 'react-redux'
 import avatar from '../../assets/avatar.jpg'
+import { useEffect } from 'react'
+import Spinner from '../../components/Spinner'
+import { useNavigate } from 'react-router-dom'
 
 const UserPage = () => {
-  const { user } = useSelector((state) => state.user)
+  const navigate = useNavigate()
+
+  const userStore = useSelector((state) => state.user)
+  const projectsStore = useSelector((state) => state.projects)
+  const user = userStore.user
+  const projects = projectsStore.projects
+
+  useEffect(() => {
+    if (!userStore.isError && user && user.token) {
+      console.log('Welcome!')
+    } else {
+      navigate('/login/')
+    }
+  }, [])
+
+  const isPending = projectsStore.isPending || userStore.isPending
+  if (isPending) {
+    return <Spinner />
+  }
 
   return (
     <div

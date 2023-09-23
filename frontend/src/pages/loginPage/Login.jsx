@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../../redux/userStore/userSlice'
 import { Alert } from '../../components/Alert'
+import Spinner from '../../components/Spinner'
 
 function Login() {
   const dispatch = useDispatch()
@@ -49,12 +50,19 @@ function Login() {
     }
   }
 
+  const user = useSelector((state) => state.user)
+  const projects = useSelector((state) => state.projects)
+  const isPending = projects.isPending || user.isPending
+  if (isPending) {
+    return <Spinner />
+  }
+
   return (
     <div
       id="login-page"
       className="flex flex-col items-center bg-yellow-50 px-12 py-3 font-poppins"
     >
-      {/* TODO: Show Alert, page refresh because of the dispatch in onSubmit */}
+      {/* TODO: Show Alert */}
       {/* {showAlert.show ? (
         <Alert
           type={showAlert.type}

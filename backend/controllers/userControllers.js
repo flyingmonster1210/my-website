@@ -121,6 +121,7 @@ const updateUser = asyncHandler(async (req, res) => {
       message: 'User info updated.',
       user: {
         ...body,
+        token: req.headers.autorization.split(' ')[1],
         _id: params.id,
       },
     })

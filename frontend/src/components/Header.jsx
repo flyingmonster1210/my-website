@@ -10,6 +10,16 @@ function Header() {
   const { user } = useSelector((state) => state.user)
   const token = user ? user.token : user
 
+  const registerBtn = (
+    <button
+      className="hover:text-gray-500"
+      onClick={() => {
+        navigate('/register')
+      }}
+    >
+      register
+    </button>
+  )
   const loginBtn = (
     <button
       className="hover:text-gray-500"
@@ -36,6 +46,16 @@ function Header() {
     </button>
   )
 
+  const rightBtn = () => {
+    if (token) {
+      return logoutBtn
+    } else if (url.includes('login')) {
+      return registerBtn
+    } else {
+      return loginBtn
+    }
+  }
+
   return (
     <div
       id="header"
@@ -49,7 +69,7 @@ function Header() {
       >
         Home
       </button>
-      {token ? logoutBtn : loginBtn}
+      {rightBtn()}
     </div>
   )
 }

@@ -24,7 +24,7 @@ const isEmpty = (obj, keys) => {
     if (!(keys[i] in obj)) {
       return {
         result: true,
-        message: 'The obj does not contain the require field(s).'
+        message: 'The obj does not contain the require field (' + keys[i] + ').'
       }
     }
   }

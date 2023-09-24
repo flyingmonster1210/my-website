@@ -87,120 +87,120 @@ const userSlice = createSlice({
         state.isError = false
         state.isSuccess = false
         state.isPending = true
-        state.message = ''
+        state.errorMessage = ''
       })
       .addCase(register.fulfilled, (state, action) => {
         state.isError = false
         state.isSuccess = true
         state.isPending = false
         state.user = action.payload
-        state.message = ''
+        state.errorMessage = ''
       })
       .addCase(register.rejected, (state, action) => {
         state.isError = true
         state.isSuccess = false
         state.isPending = false
-        state.message = action.payload
+        state.errorMessage = action.payload
       })
       // login
       .addCase(login.pending, (state) => {
         state.isError = false
         state.isSuccess = false
         state.isPending = true
-        state.message = ''
+        state.errorMessage = ''
       })
       .addCase(login.fulfilled, (state, action) => {
         state.isError = false
         state.isSuccess = true
         state.isPending = false
         state.user = action.payload
-        state.message = ''
+        state.errorMessage = ''
       })
       .addCase(login.rejected, (state, action) => {
         state.isError = true
         state.isSuccess = false
         state.isPending = false
-        state.message = action.payload
+        state.errorMessage = action.payload
       })
       // update
       .addCase(update.pending, (state) => {
         state.isError = false
         state.isSuccess = false
         state.isPending = true
-        state.message = ''
+        state.errorMessage = ''
       })
       .addCase(update.fulfilled, (state, action) => {
         state.isError = false
         state.isSuccess = true
         state.isPending = false
         state.user = action.payload
-        state.message = ''
+        state.errorMessage = ''
       })
       .addCase(update.rejected, (state, action) => {
         state.isError = true
         state.isSuccess = false
         state.isPending = false
-        state.message = action.payload
+        state.errorMessage = action.payload
       })
       // logout
       .addCase(logout.pending, (state) => {
         state.isError = false
         state.isSuccess = false
         state.isPending = true
-        state.message = ''
+        state.errorMessage = ''
       })
       .addCase(logout.fulfilled, (state, action) => {
         state.isError = false
         state.isSuccess = true
         state.isPending = false
         state.user = action.payload
-        state.message = ''
+        state.errorMessage = ''
       })
       .addCase(logout.rejected, (state, action) => {
         state.isError = true
         state.isSuccess = false
         state.isPending = false
-        state.message = action.payload
+        state.errorMessage = action.payload
       })
       // getUserById
       .addCase(getUserById.pending, (state) => {
         state.isError = false
         state.isSuccess = false
         state.isPending = true
-        state.message = ''
+        state.errorMessage = ''
       })
       .addCase(getUserById.fulfilled, (state, action) => {
         state.isError = false
         state.isSuccess = true
         state.isPending = false
         state.user = action.payload
-        state.message = ''
+        state.errorMessage = ''
       })
       .addCase(getUserById.rejected, (state, action) => {
         state.isError = true
         state.isSuccess = false
         state.isPending = false
-        state.message = action.payload
+        state.errorMessage = action.payload
       })
       // loadAndSetDefaultUserInfo
       .addCase(loadAndSetDefaultUserInfo.pending, (state) => {
         state.isError = false
         state.isSuccess = false
         state.isPending = true
-        state.message = ''
+        state.errorMessage = ''
       })
       .addCase(loadAndSetDefaultUserInfo.fulfilled, (state, action) => {
         state.isError = false
         state.isSuccess = true
         state.isPending = false
         state.user = action.payload
-        state.message = ''
+        state.errorMessage = ''
       })
       .addCase(loadAndSetDefaultUserInfo.rejected, (state, action) => {
         state.isError = true
         state.isSuccess = false
         state.isPending = false
-        state.message = action.payload
+        state.errorMessage = action.payload
       })
   },
 })

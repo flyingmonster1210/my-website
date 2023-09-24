@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import userService from "./userService"
 
-// TODO: Handle the localStorage(user) with token/id
 const loginUser = JSON.parse(localStorage.getItem('user'))
 
 const initialState = {

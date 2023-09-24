@@ -25,7 +25,6 @@ const UserPage = () => {
     if (user && user.token) {
       setFormData(user)
     } else {
-      console.log(user)
       navigate('/login/')
     }
     return () => {

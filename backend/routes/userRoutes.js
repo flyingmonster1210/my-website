@@ -11,7 +11,4 @@ router.route('/register').post(registerUser)
 router.route('/delete/:id').delete(protect, deleteUser)
 router.route('/update/:id').put(protect, updateUser)
 
-// TODO: If anyone else login, getMe should return the profile accounting to the id.
-// router.route('/me/:id').get(getMe)
-
 module.exports = router

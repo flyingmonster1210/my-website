@@ -1,5 +1,5 @@
 const isEmpty = (obj, keys) => {
-  if (obj === null || obj === undefined) {
+  if (obj === undefined || obj === null) {
     return {
       result: true,
       message: 'The obj is null or undefined.'

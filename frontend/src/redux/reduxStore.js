@@ -5,10 +5,11 @@ import projectsSlice from './projectsStore/projectsSlice'
 import axios from 'axios'
 
 axios.interceptors.response.use(
-  response => {
+  (response) => {
     return response
   },
   async (error) => {
+    console.log('Error')
     const { config } = error
 
     // Retry request 3 times
@@ -19,7 +20,9 @@ axios.interceptors.response.use(
       config.retryTimes = 2
     }
     else {
-      return Promise.reject(error)
+      console.log('error: ', error)
+      // return Promise.reject(error)
+      throw new Error(error)
     }
 
     const delayRetryRequest = () => {
@@ -34,8 +37,8 @@ axios.interceptors.response.use(
     try {
       await delayRetryRequest()
       return await axios(config)
-    } catch (err) {
-      return err
+    } catch {
+      return error
     }
   }
 )

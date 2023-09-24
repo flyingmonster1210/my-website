@@ -48,7 +48,7 @@ const UserPage = () => {
     return () => {
       dispatch(userReset())
     }
-  }, [navigate, url, user, userStore])
+  }, [dispatch, navigate, url, user, userStore])
 
   const isPending = projectsStore.isPending || userStore.isPending
   if (isPending) {
@@ -73,9 +73,9 @@ const UserPage = () => {
             introduction,
           })
         ).unwrap()
-        console.log(response)
+        console.log('response from try: ', response)
         setIsRegistering(false)
-        navigate('/')
+        // navigate('/')
       } else {
         await dispatch(
           update({
@@ -85,7 +85,8 @@ const UserPage = () => {
         ).unwrap()
       }
     } catch (error) {
-      console.log('error: ', error)
+      console.log('error from catch: ', error)
+      // console.log('error: ', error)
     }
   }
 

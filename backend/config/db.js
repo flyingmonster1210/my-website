@@ -8,7 +8,7 @@ const connetDB = async () => {
 
     console.log(`MongoDB conected: ${conn.connection.host}`.cyan.underline)
   } catch (error) {
-    console.log(error)
+    console.error(error)
     process.exit(1)
   }
 }

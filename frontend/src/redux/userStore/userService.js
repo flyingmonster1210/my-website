@@ -37,7 +37,6 @@ const update = async (userId, userData, token) => {
   const { data } = await axios.put(API_URL + 'update/' + userId, userData, config)
 
   if (data && data.user) {
-    console.log('set user to local: ', data.user)
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data.user))
   }
 

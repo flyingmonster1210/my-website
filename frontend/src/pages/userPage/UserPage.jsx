@@ -73,7 +73,6 @@ const UserPage = () => {
             introduction,
           })
         ).unwrap()
-        console.log('response from if try: ', response)
         setIsRegistering(false)
         // navigate('/')
       } else {

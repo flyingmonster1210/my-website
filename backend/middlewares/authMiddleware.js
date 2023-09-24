@@ -22,7 +22,7 @@ const protect = asyncHandler(async (req, res, next) => {
 
       next()
     } catch (error) {
-      console.log(error)
+      console.error(error)
       res.status(401)
       throw new Error('Verify failed, request is not authorized.')
     }

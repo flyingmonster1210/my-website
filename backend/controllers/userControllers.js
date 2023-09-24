@@ -125,14 +125,13 @@ const updateUser = asyncHandler(async (req, res) => {
   }
   if (body.email) {
     const findUserByEmail = await User.findOne({ email: body.email })
-    if (findUserByEmail && findUserByEmail.id !== findUserById.id && findUserByEmail.email === findUserById.email) {
+    if (findUserByEmail && findUserByEmail.id !== findUserById.id && findUserByEmail.email === body.email) {
       res.status(400)
-      throw new Error('This email has been used, please use another one.')
+      throw new Error('This email has been used by another user, please use another one.')
     }
   }
 
   const updatedUser = await User.findByIdAndUpdate(params.id, body)
-
   if (updatedUser) {
     res.json({
       message: 'User info updated.',

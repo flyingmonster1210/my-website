@@ -15,7 +15,6 @@ const UserPage = () => {
   const user = userStore.user
 
   const [isRegistering, setIsRegistering] = useState(false)
-  // if (url.includes('register')) setIsRegistering(true)
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -60,9 +59,10 @@ const UserPage = () => {
   const onSubmit = async (e) => {
     e.preventDefault()
 
+    let response = null
     try {
       if (isRegistering) {
-        const response = await dispatch(
+        response = await dispatch(
           register({
             username,
             password,
@@ -73,11 +73,11 @@ const UserPage = () => {
             introduction,
           })
         ).unwrap()
-        console.log('response from try: ', response)
+        console.log('response from if try: ', response)
         setIsRegistering(false)
         // navigate('/')
       } else {
-        await dispatch(
+        response = await dispatch(
           update({
             id: user._id,
             userData: {
@@ -92,8 +92,7 @@ const UserPage = () => {
         ).unwrap()
       }
     } catch (error) {
-      console.log('error from catch: ', error)
-      // console.log('error: ', error)
+      console.error(error)
     }
   }
 

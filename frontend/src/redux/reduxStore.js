@@ -9,7 +9,6 @@ axios.interceptors.response.use(
     return response
   },
   async (error) => {
-    console.log('Error')
     const { config } = error
 
     // Retry request 3 times
@@ -20,15 +19,13 @@ axios.interceptors.response.use(
       config.retryTimes = 2
     }
     else {
-      console.log('error: ', error)
-      // return Promise.reject(error)
-      throw new Error(error)
+      return Promise.reject(error)
     }
 
     const delayRetryRequest = () => {
       return new Promise((resolve) => {
         setTimeout(() => {
-          console.log('Retrying the request: ', config.url, ', Times =', (3 - config.retryTimes) + '.')
+          // console.log('Retrying the request: ', config.url, ', Times =', (3 - config.retryTimes) + '.')
           resolve()
         }, 1000)
       })
@@ -38,7 +35,7 @@ axios.interceptors.response.use(
       await delayRetryRequest()
       return await axios(config)
     } catch {
-      return error
+      return Promise.reject(error)
     }
   }
 )

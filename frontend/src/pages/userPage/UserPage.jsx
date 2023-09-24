@@ -80,7 +80,14 @@ const UserPage = () => {
         await dispatch(
           update({
             id: user._id,
-            userData: { phone, email, linkedin, github, introduction },
+            userData: {
+              username,
+              phone,
+              email,
+              linkedin,
+              github,
+              introduction,
+            },
           })
         ).unwrap()
       }
@@ -150,7 +157,7 @@ const UserPage = () => {
           <span>Email</span>
           <input
             id="email"
-            type="text"
+            type="email"
             value={email}
             onChange={onChange}
             className="block p-1 w-full col-span-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
@@ -168,7 +175,7 @@ const UserPage = () => {
           <span>GitHub</span>
           <input
             id="github"
-            type="text"
+            type="url"
             value={github}
             onChange={onChange}
             className="block p-1 w-full col-span-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50"

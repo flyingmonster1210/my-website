@@ -33,7 +33,7 @@ const logout = async () => {
 
 // User update profile
 const update = async (userId, userData, token) => {
-  const config = { headers: { Autorization: `Bearer ${token}` } }
+  const config = { headers: { authorization: `Bearer ${token}` } }
   const { data } = await axios.put(API_URL + 'update/' + userId, userData, config)
 
   if (data && data.user) {
@@ -55,7 +55,7 @@ const loadAndSetDefaultUserInfo = async () => {
 }
 
 const getUserById = async (userId, token) => {
-  const config = { headers: { Autorization: `Bearer ${token}` } }
+  const config = { headers: { authorization: `Bearer ${token}` } }
   const { data } = await axios.get(API_URL + '/get/' + userId, config)
 
   if (data && data.user) {

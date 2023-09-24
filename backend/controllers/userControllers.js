@@ -2,17 +2,21 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
 
-const { isEmpty } = require('../tools')
+const { keysNotFound } = require('../tools')
 const User = require('../models/userModel')
 
 // @desc    Register a new user account
 // @route   Post /api/user/register
 const registerUser = asyncHandler(async (req, res) => {
   const body = req.body
-  const check = isEmpty(body, ['username', 'password', 'email'])
+  const check = keysNotFound(body, ['username', 'password', 'email'])
   if (check.result) {
     res.status(400)
     throw new Error(check.message)
+  }
+  if (!(body.username && body.password && body.email)) {
+    res.status(400)
+    throw new Error('A required field is empty.')
   }
 
   const isUserExist = await User.findOne({ email: body.email })
@@ -54,10 +58,14 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route   POST /api/user/login
 const loginUser = asyncHandler(async (req, res) => {
   const body = req.body
-  const check = isEmpty(body, ['email', 'password'])
+  const check = keysNotFound(body, ['email', 'password'])
   if (check.result) {
     res.status(400)
     throw new Error(check.message)
+  }
+  if (!(body.password && body.email)) {
+    res.status(400)
+    throw new Error('A required field is empty.')
   }
 
   const user = await User.findOne({ email: body.email })
@@ -94,12 +102,21 @@ const loginUser = asyncHandler(async (req, res) => {
 const updateUser = asyncHandler(async (req, res) => {
   const body = req.body
   const params = req.params
-  const check = isEmpty(params, ['id'])
-  if (check.result) {
-    res.status(400)
-    throw new Error(check.message)
+  const check = [keysNotFound(params, ['id']), keysNotFound(body, ['email'])]
+  for (let i = 0; i < check.length; i++) {
+    if (check[i].result) {
+      res.status(400)
+      throw new Error(check[i].message)
+    }
   }
-
+  if (!(params.id)) {
+    res.status(400)
+    throw new Error('A required field is empty.')
+  }
+  if (!(body.email)) {
+    res.status(400)
+    throw new Error('A required field is empty.')
+  }
 
   const findUserById = await User.findById(params.id)
   if (!findUserById) {
@@ -121,7 +138,7 @@ const updateUser = asyncHandler(async (req, res) => {
       message: 'User info updated.',
       user: {
         ...body,
-        token: req.headers.autorization.split(' ')[1],
+        token: req.headers.authorization.split(' ')[1],
         _id: params.id,
       },
     })
@@ -136,10 +153,14 @@ const updateUser = asyncHandler(async (req, res) => {
 // @route   DELETE /api/user/delete/:id
 const deleteUser = asyncHandler(async (req, res) => {
   const params = req.params
-  const check = isEmpty(params, ['id'])
+  const check = keysNotFound(params, ['id'])
   if (check.result) {
     res.status(400)
     throw new Error(check.message)
+  }
+  if (!(params.id)) {
+    res.status(400)
+    throw new Error('A required field is empty.')
   }
 
   const user = await User.findById(params.id)
@@ -165,10 +186,14 @@ const deleteUser = asyncHandler(async (req, res) => {
 // @route   GET /api/user/get/:id
 const getUser = asyncHandler(async (req, res) => {
   const params = req.params
-  const check = isEmpty(params, ['id'])
+  const check = keysNotFound(params, ['id'])
   if (check.result) {
     res.status(400)
     throw new Error(check.message)
+  }
+  if (!(params.id)) {
+    res.status(400)
+    throw new Error('A required field is empty.')
   }
 
   const user = await User.findById(params.id)
@@ -195,6 +220,7 @@ const getUser = asyncHandler(async (req, res) => {
 // @desc    Get user info
 // @route   GET /api/user/me
 const getMe = asyncHandler(async (req, res) => {
+  // TODO: Get default userId by login function.
   const userId = '65076e3442427d2b8e90ca30'
   const user = await User.findById(userId)
   if (user) {

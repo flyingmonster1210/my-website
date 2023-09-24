@@ -1,4 +1,4 @@
-const isEmpty = (obj, keys) => {
+const keysNotFound = (obj, keys) => {
   if (obj === undefined || obj === null) {
     return {
       result: true,
@@ -36,5 +36,5 @@ const isEmpty = (obj, keys) => {
 }
 
 module.exports = {
-  isEmpty,
+  keysNotFound,
 }

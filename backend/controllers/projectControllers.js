@@ -1,7 +1,7 @@
 const asyncHandler = require('express-async-handler')
 const Project = require('../models/projectModel')
 
-const { isEmpty } = require('../tools')
+const { keysNotFound } = require('../tools')
 
 // @desc    Show all the projects
 // @route   GET /api/project/
@@ -18,10 +18,14 @@ const getAllProjects = asyncHandler(async (req, res) => {
 // @route   GET /api/project/:id
 const getProject = asyncHandler(async (req, res) => {
   const params = req.params
-  const check = isEmpty(params, ['id'])
+  const check = keysNotFound(params, ['id'])
   if (check.result) {
     res.status(400)
     throw new Error(check.message)
+  }
+  if (!(params.id)) {
+    res.status(400)
+    throw new Error('A required field is empty.')
   }
 
   const project = await Project.findById(params.id)
@@ -34,19 +38,24 @@ const getProject = asyncHandler(async (req, res) => {
 // @desc    Add a new project
 // @route   POST /api/project/
 const addProject = asyncHandler(async (req, res) => {
-  const check = isEmpty(req.body, ['name'])
+  const body = req.body
+  const check = keysNotFound(body, ['name'])
   if (check.result) {
     res.status(400)
     throw new Error(check.message)
   }
+  if (!(body.name)) {
+    res.status(400)
+    throw new Error('A required field is empty.')
+  }
 
-  const isProjectExist = await Project.findOne({ name: req.body.name })
+  const isProjectExist = await Project.findOne({ name: body.name })
   if (isProjectExist) {
     res.status(400)
     throw new Error('This project\'s name has been used, please use another one.')
   }
 
-  const newProject = await Project.create(req.body)
+  const newProject = await Project.create(body)
   if (newProject) {
     res.json({
       message: 'Add a new project.',
@@ -62,29 +71,35 @@ const addProject = asyncHandler(async (req, res) => {
 // @desc    Update a project
 // @route   PUT /api/project/:id
 const updateProject = asyncHandler(async (req, res) => {
-  const check = [isEmpty(req.params, ['id']), isEmpty(req.body, ['name'])]
+  const params = req.params
+  const body = req.body
+  const check = [keysNotFound(params, ['id']), keysNotFound(body, ['name'])]
   for (let i = 0; i < check.length; i++) {
     if (check[i].result) {
       res.status(400)
       throw new Error(check[i].message)
     }
   }
+  if (!(params.id && body.name)) {
+    res.status(400)
+    throw new Error('A required field is empty.')
+  }
 
-  const project = await Project.findById(req.params.id)
+  const project = await Project.findById(params.id)
   if (!project) {
     res.status(400)
     throw new Error('Project not found.')
   }
 
   const updatedProject = await Project.findByIdAndUpdate(
-    req.params.id,
-    req.body,
+    params.id,
+    body,
   )
 
   if (updatedProject) {
     res.json({
-      message: 'Update the project with id:' + req.params.id + '.',
-      project: req.body,
+      message: 'Update the project with id:' + params.id + '.',
+      project: body,
     })
   }
   else {
@@ -96,22 +111,27 @@ const updateProject = asyncHandler(async (req, res) => {
 // @desc    Delete a project
 // @route   DELETE /api/project/:id
 const deleteProject = asyncHandler(async (req, res) => {
-  const check = isEmpty(req.params, ['id'])
+  const params = req.params
+  const check = keysNotFound(params, ['id'])
   if (check.result) {
     res.status(400)
     throw new Error(check.message)
   }
+  if (!(params.id)) {
+    res.status(400)
+    throw new Error('A required field is empty.')
+  }
 
-  const project = await Project.findById(req.params.id)
+  const project = await Project.findById(params.id)
   if (!project) {
     res.status(400)
     throw new Error('Project is not found.')
   }
 
-  const deletedProject = await Project.findByIdAndRemove(req.params.id)
+  const deletedProject = await Project.findByIdAndRemove(params.id)
   if (deletedProject) {
     res.json({
-      message: 'Delete the project with id:' + req.params.id + '.',
+      message: 'Delete the project with id:' + params.id + '.',
       project: deletedProject,
     })
   }

@@ -193,7 +193,7 @@ const UserPage = () => {
           type="submit"
           className="mt-10 p-3 text-[14px] font-semibold md:text-[18px]"
         >
-          {isRegistering ? 'register' : 'Update'}
+          {isRegistering ? 'Register' : 'Update'}
         </button>
       </form>
     </div>

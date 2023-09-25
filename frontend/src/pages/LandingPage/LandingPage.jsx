@@ -25,6 +25,8 @@ function LandingPage() {
   let projects = projectsStore.projects
 
   useEffect(() => {
+    // TODO: If user is not empty, that means someone has login
+    //       and the landing page should load the projects of that user
     if (!userStore || !user || !projectsStore || !projects) {
       dispatch(loadAndSetDefaultUserInfo())
       dispatch(loadDefaultProjectList())

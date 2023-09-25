@@ -67,7 +67,7 @@ function Login() {
         title: 'Fail',
         message: 'Login Fail!',
       })
-      console.log(error)
+      console.error(error)
     }
   }
 

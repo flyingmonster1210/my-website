@@ -3,7 +3,7 @@ const Project = require('../models/projectModel')
 
 const { keysNotFound } = require('../tools')
 
-// @desc    Show all the projects
+// @desc    Show all the projects of the default user
 // @route   GET /api/project/
 const getAllProjects = asyncHandler(async (req, res) => {
   const allProjects = await Project.find()
@@ -11,6 +11,27 @@ const getAllProjects = asyncHandler(async (req, res) => {
   res.json({
     message: 'Get all projects.',
     project: allProjects,
+  })
+})
+
+// @desc    Show all projects of a user with userId
+const getAllProjectsByUserId = asyncHandler(async (req, res) => {
+  const params = req.params
+  const check = keysNotFound(params, ['id'])
+  if (check.result) {
+    res.status(400)
+    throw new Error(check.message)
+  }
+  if (!params.id) {
+    res.status(400)
+    throw new Error('A required field is empty.')
+  }
+
+  const projects = await Project.find({ userId: params.id })
+
+  res.json({
+    message: 'Get all projects of user: ' + params.id + '.',
+    project: projects,
   })
 })
 
@@ -147,5 +168,6 @@ module.exports = {
   addProject,
   deleteProject,
   updateProject,
+  getAllProjectsByUserId,
 }
 

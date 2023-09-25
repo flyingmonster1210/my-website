@@ -10,10 +10,12 @@ const loadDefaultProjectList = async () => {
   return (data && data.project) ? data.project : data
 }
 
-// TODO: Get all projects by userId
-// const getAllProjects = async () => {
+const getAllProjectsWithUserId = async (userId) => {
+  const { data } = await axios.get(API_URL + 'projectsOfUser/' + userId)
+  console.log(data)
 
-// }
+  return (data && data.project) ? data.project : data
+}
 
 // Get a project by id
 const getProject = async (id) => {
@@ -50,6 +52,7 @@ const projectsService = {
   addProject,
   deleteProject,
   updateProject,
+  getAllProjectsWithUserId,
 }
 
 export default projectsService

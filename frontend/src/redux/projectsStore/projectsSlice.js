@@ -10,6 +10,15 @@ const initialState = {
   errorMessage: '',
 }
 
+export const getAllProjectsWithUserId = createAsyncThunk('project/loadProjectsWithUserId', async (userId, thunkAPI) => {
+  try {
+    return await projectsService.getAllProjectsWithUserId(userId)
+  } catch (error) {
+    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
 export const loadDefaultProjectList = createAsyncThunk('project/loadDefaultProjectList', async (_, thunkAPI) => {
   try {
     return await projectsService.loadDefaultProjectList()
@@ -47,6 +56,26 @@ const projectsSlice = createSlice({
         state.errorMessage = ''
       })
       .addCase(loadDefaultProjectList.rejected, (state, action) => {
+        state.isError = true
+        state.isSuccess = false
+        state.isPending = false
+        state.errorMessage = action.payload
+      })
+      // getAllProjectsWithUserId
+      .addCase(getAllProjectsWithUserId.pending, (state) => {
+        state.isError = false
+        state.isSuccess = false
+        state.isPending = true
+        state.errorMessage = ''
+      })
+      .addCase(getAllProjectsWithUserId.fulfilled, (state, action) => {
+        state.isError = false
+        state.isSuccess = true
+        state.isPending = false
+        state.projects = action.payload
+        state.errorMessage = ''
+      })
+      .addCase(getAllProjectsWithUserId.rejected, (state, action) => {
         state.isError = true
         state.isSuccess = false
         state.isPending = false

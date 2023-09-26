@@ -24,8 +24,9 @@ const getProject = async (id) => {
 }
 
 // Add a project
-const addProject = async (projectData) => {
-  const { data } = await axios.post(API_URL, projectData)
+const addProject = async (projectData, token) => {
+  const config = { headers: { authorization: `Bearer ${token}` } }
+  const { data } = await axios.post(API_URL, projectData, config)
 
   return (data && data.project) ? data.project : data
 }

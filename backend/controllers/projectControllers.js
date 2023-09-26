@@ -70,12 +70,6 @@ const addProject = asyncHandler(async (req, res) => {
     throw new Error('A required field is empty.')
   }
 
-  const isProjectExist = await Project.findOne({ name: body.name })
-  if (isProjectExist) {
-    res.status(400)
-    throw new Error('This project\'s name has been used, please use another one.')
-  }
-
   const newProject = await Project.create(body)
   if (newProject) {
     res.json({

@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Spinner from '../../components/Spinner'
-import { deleteProject } from '../../redux/projectsStore/projectsSlice'
+import {
+  deleteProject,
+  getAllProjectsWithUserId,
+} from '../../redux/projectsStore/projectsSlice'
 
 function ProjectsPage() {
   const dispatch = useDispatch()
@@ -14,12 +17,15 @@ function ProjectsPage() {
   let { projects } = useSelector((state) => state.projects)
 
   useEffect(() => {
-    if (user && user.token && projects !== null) {
-      setEditing(false)
+    if (user && user.token) {
+      // setEditing(false)
+      if (!projects) {
+        dispatch(getAllProjectsWithUserId(user._id))
+      }
     } else {
       navigate('/login/')
     }
-  }, [user, projects])
+  }, [user, projects, dispatch])
 
   const isPending = user.idPending && projects.isPending
   if (isPending) return <Spinner />
@@ -32,7 +38,9 @@ function ProjectsPage() {
     }
   }
   const updateProjectWithId = () => {}
-  const addNewProject = () => {}
+  const addNewProject = () => {
+    navigate('/project/')
+  }
 
   return (
     <div

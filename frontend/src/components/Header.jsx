@@ -18,7 +18,7 @@ function Header() {
 
   const registerBtn = (
     <button
-      className="hover:text-gray-500"
+      className="hover:text-gray-500 hover:underline"
       onClick={() => {
         navigate('/register')
       }}
@@ -28,7 +28,7 @@ function Header() {
   )
   const loginBtn = (
     <button
-      className="hover:text-gray-500"
+      className="hover:text-gray-500 hover:underline"
       onClick={() => {
         navigate('/login')
       }}

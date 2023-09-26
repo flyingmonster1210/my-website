@@ -12,7 +12,6 @@ const loadDefaultProjectList = async () => {
 
 const getAllProjectsWithUserId = async (userId) => {
   const { data } = await axios.get(API_URL + 'projectsOfUser/' + userId)
-  console.log(data)
 
   return (data && data.project) ? data.project : data
 }

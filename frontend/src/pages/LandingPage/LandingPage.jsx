@@ -119,13 +119,13 @@ function LandingPage() {
           )}
         </div>
 
-        <div id="connect">
+        <div id="contact">
           <div
             id="title"
             className="flex flex-row text-[18px] font-semibold items-center"
           >
             <img src={star} alt="star" className="max-h-[18px]" />
-            <p>Connect</p>
+            <p>Contact</p>
           </div>
 
           <div className="flex flex-col text-[16px] m-4 space-y-2">

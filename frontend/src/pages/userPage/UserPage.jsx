@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Spinner from '../../components/Spinner'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { register, update, userReset } from '../../redux/userStore/userSlice'
+import { getAllProjectsWithUserId } from '../../redux/projectsStore/projectsSlice'
 
 const UserPage = () => {
   const url = useLocation().pathname
@@ -59,10 +60,9 @@ const UserPage = () => {
   const onSubmit = async (e) => {
     e.preventDefault()
 
-    let response = null
     try {
       if (isRegistering) {
-        response = await dispatch(
+        const user = await dispatch(
           register({
             username,
             password,
@@ -73,10 +73,10 @@ const UserPage = () => {
             introduction,
           })
         ).unwrap()
+        dispatch(getAllProjectsWithUserId(user._id))
         setIsRegistering(false)
-        // navigate('/')
       } else {
-        response = await dispatch(
+        await dispatch(
           update({
             id: user._id,
             userData: {

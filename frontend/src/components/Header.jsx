@@ -18,7 +18,7 @@ function Header() {
 
   const registerBtn = (
     <button
-      className="hover:text-gray-500"
+      className="hover:text-gray-500 hover:underline"
       onClick={() => {
         navigate('/register')
       }}
@@ -28,7 +28,7 @@ function Header() {
   )
   const loginBtn = (
     <button
-      className="hover:text-gray-500"
+      className="hover:text-gray-500 hover:underline"
       onClick={() => {
         navigate('/login')
       }}
@@ -38,7 +38,7 @@ function Header() {
   )
   const logoutBtn = (
     <button
-      className="hover:text-gray-500"
+      className="hover:text-gray-500 hover:underline"
       onClick={async () => {
         try {
           await dispatch(logout()).unwrap()
@@ -53,7 +53,7 @@ function Header() {
   )
   const profileBtn = (
     <button
-      className="hover:text-gray-500"
+      className="hover:text-gray-500 hover:underline"
       onClick={async () => {
         try {
           navigate('/user/')
@@ -65,20 +65,37 @@ function Header() {
       Profile
     </button>
   )
+  const projectsBtn = (
+    <button
+      className="hover:text-gray-500 hover:underline"
+      onClick={async () => {
+        try {
+          navigate('/projects/')
+        } catch (error) {
+          console.error(error)
+        }
+      }}
+    >
+      Projects
+    </button>
+  )
 
   const rightBtn = () => {
     if (token) {
       return (
-        <div id="right-btn" className="relative">
-          <button
-            className="hover:text-gray-500"
-            onClick={() => setHide(!hide)}
-          >
+        <div
+          id="right-button"
+          className="relative"
+          onMouseEnter={() => setHide(false)}
+          onMouseLeave={() => setHide(true)}
+        >
+          <button className="hover:text-gray-500">
             Hello, {user.username}!
           </button>
           {hide ? null : (
             <div className="absolute right-0 flex flex-col z-1 font-normal items-end sbuttonace-y-1">
               {profileBtn}
+              {projectsBtn}
               {logoutBtn}
             </div>
           )}
@@ -96,14 +113,16 @@ function Header() {
       id="header"
       className="flex flex-row justify-between items-center bg-yellow-50 px-12 py-3 font-poppins text-[14px] font-semibold md:text-[18px]"
     >
-      <button
-        className="hover:text-gray-500"
-        onClick={() => {
-          navigate('/')
-        }}
-      >
-        Home
-      </button>
+      <div id="left-button">
+        <button
+          className="hover:text-gray-500"
+          onClick={() => {
+            navigate('/')
+          }}
+        >
+          Home
+        </button>
+      </div>
       {rightBtn()}
     </div>
   )

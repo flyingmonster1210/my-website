@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { login } from '../../redux/userStore/userSlice'
 import { Alert } from '../../components/Alert'
 import Spinner from '../../components/Spinner'
+import { getAllProjectsWithUserId } from '../../redux/projectsStore/projectsSlice'
 
 function Login() {
   const dispatch = useDispatch()
@@ -47,7 +48,8 @@ function Login() {
 
     const userData = { email, password }
     try {
-      await dispatch(login(userData)).unwrap()
+      const user = await dispatch(login(userData)).unwrap()
+      dispatch(getAllProjectsWithUserId(user._id))
       setShowAlert({
         show: true,
         type: 'fullfilled',

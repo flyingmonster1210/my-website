@@ -10,6 +10,16 @@ const initialState = {
   errorMessage: '',
 }
 
+export const deleteProject = createAsyncThunk('project/delete', async (id, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().user.user.token
+    return await projectsService.deleteProject(id, token)
+  } catch (error) {
+    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
 export const getAllProjectsWithUserId = createAsyncThunk('project/loadProjectsWithUserId', async (userId, thunkAPI) => {
   try {
     return await projectsService.getAllProjectsWithUserId(userId)
@@ -76,6 +86,26 @@ const projectsSlice = createSlice({
         state.errorMessage = ''
       })
       .addCase(getAllProjectsWithUserId.rejected, (state, action) => {
+        state.isError = true
+        state.isSuccess = false
+        state.isPending = false
+        state.errorMessage = action.payload
+      })
+      // deleteProject
+      .addCase(deleteProject.pending, (state) => {
+        state.isError = false
+        state.isSuccess = false
+        state.isPending = true
+        state.errorMessage = ''
+      })
+      .addCase(deleteProject.fulfilled, (state, action) => {
+        state.isError = false
+        state.isSuccess = true
+        state.isPending = false
+        state.projects = (state.projects).filter((project) => (project._id !== action.payload._id))
+        state.errorMessage = ''
+      })
+      .addCase(deleteProject.rejected, (state, action) => {
         state.isError = true
         state.isSuccess = false
         state.isPending = false

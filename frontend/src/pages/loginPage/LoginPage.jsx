@@ -61,7 +61,7 @@ function Login() {
       } else {
         localStorage.removeItem('loginInfo')
       }
-      navigate('/user/')
+      navigate('/')
     } catch (error) {
       setShowAlert({
         show: true,

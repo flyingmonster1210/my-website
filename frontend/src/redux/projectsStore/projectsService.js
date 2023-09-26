@@ -31,9 +31,9 @@ const addProject = async (projectData) => {
 }
 
 // Delete a project
-// TODO: After delete, update projects list in localStorage
-const deleteProject = async (id) => {
-  const { data } = await axios.delete(API_URL + id)
+const deleteProject = async (id, token) => {
+  const config = { headers: { authorization: `Bearer ${token}` } }
+  const { data } = await axios.delete(API_URL + id, config)
 
   return (data && data.project) ? data.project : data
 }

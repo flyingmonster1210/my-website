@@ -93,7 +93,7 @@ function LandingPage() {
 
       <div
         id="section2"
-        className="grid grid-cols-1 gap-3 w-[90%] my-5 justify-between items-center sm:grid-cols-2 sm:items-start md:my-8"
+        className="grid grid-cols-1 gap-3 w-[90%] my-5 items-center md:grid-cols-2 md:items-start md:my-8"
       >
         <div id="experience">
           <div

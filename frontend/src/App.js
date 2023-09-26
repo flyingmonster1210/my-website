@@ -3,9 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import LandingPage from './pages/landingPage/LandingPage'
-import ProjectsPage from './pages/projectsPage/ProjectsPage'
+import ProjectsListPage from './pages/projectsListPage/ProjectsListPage'
 import UserPage from './pages/userPage/UserPage'
 import LoginPage from './pages/loginPage/LoginPage'
+import ProjectPage from './pages/projectPage/ProjectPage'
 
 
 function App () {
@@ -16,7 +17,8 @@ function App () {
         <Routes>
           <Route path='/' element={<LandingPage />} />
           <Route path='/login' element={<LoginPage />} />
-          <Route path='/projects' element={<ProjectsPage />} />
+          <Route path='/projects' element={<ProjectsListPage />} />
+          <Route path='project' element={<ProjectPage />} />
           <Route path='/user' element={<UserPage />} />
           <Route path='/register' element={<UserPage />} />
         </Routes>

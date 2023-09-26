@@ -21,10 +21,18 @@ function ProjectsPage() {
 
   return (
     <div
-      id="projects-page"
+      id="projects-list-page"
       className="flex flex-col flex-grow  bg-yellow-50 px-12 py-3 font-poppins"
     >
-      <h2 className="p-3 font-bold text-3xl">Projects</h2>
+      <div className="flex flex-row">
+        <h2 className="p-3 font-bold text-3xl">Projects</h2>
+        <button
+          onClick={() => navigate('/project/')}
+          className="hover:text-gray-500"
+        >
+          Edit
+        </button>
+      </div>
       <ul className="p-3">
         {projects && Object.values(projects).length
           ? projects.map((project, index) => (

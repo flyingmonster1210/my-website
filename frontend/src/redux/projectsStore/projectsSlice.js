@@ -68,6 +68,15 @@ export const loadDefaultProjectList = createAsyncThunk('project/loadDefaultProje
   }
 })
 
+const compareProjectTime = (projectA, projectB) => {
+  if (projectA && projectB && projectA.time && projectB.time) {
+    if (projectA.time == projectB.time) return 0
+    if (projectA.time > projectB.time) return -1
+    if (projectA.time < projectB.time) return 1
+  }
+  return 0
+}
+
 const projectsSlice = createSlice({
   name: 'projects',
   initialState: initialState,
@@ -92,7 +101,7 @@ const projectsSlice = createSlice({
         state.isError = false
         state.isSuccess = true
         state.isPending = false
-        state.projects = action.payload
+        state.projects = action.payload.sort(compareProjectTime)
         state.errorMessage = ''
       })
       .addCase(loadDefaultProjectList.rejected, (state, action) => {
@@ -112,7 +121,7 @@ const projectsSlice = createSlice({
         state.isError = false
         state.isSuccess = true
         state.isPending = false
-        state.projects = action.payload
+        state.projects = action.payload.sort(compareProjectTime)
         state.errorMessage = ''
       })
       .addCase(getAllProjectsWithUserId.rejected, (state, action) => {
@@ -153,6 +162,7 @@ const projectsSlice = createSlice({
         state.isSuccess = true
         state.isPending = false
         state.projects.push(action.payload)
+        state.projects.sort(compareProjectTime)
         state.errorMessage = ''
       })
       .addCase(addProject.rejected, (state, action) => {
@@ -193,6 +203,7 @@ const projectsSlice = createSlice({
         state.isSuccess = true
         state.isPending = false
         state.projects = state.projects.map((project) => project._id === action.payload._id ? action.payload : project)
+        state.projects.sort(compareProjectTime)
         state.errorMessage = ''
       })
       .addCase(updateProject.rejected, (state, action) => {

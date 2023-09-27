@@ -12,6 +12,7 @@ import {
   userReset,
 } from '../../redux/userStore/userSlice'
 import {
+  getAllProjectsWithUserId,
   loadDefaultProjectList,
   projectReset,
 } from '../../redux/projectsStore/projectsSlice'
@@ -25,8 +26,6 @@ function LandingPage() {
   let projects = projectsStore.projects
 
   useEffect(() => {
-    // TODO: If user is not empty, that means someone has login
-    //       and the landing page should load the projects of that user
     if (!userStore || !user || !projectsStore || !projects) {
       dispatch(loadAndSetDefaultUserInfo())
       dispatch(loadDefaultProjectList())
@@ -35,7 +34,7 @@ function LandingPage() {
       dispatch(userReset())
       dispatch(projectReset())
     }
-  }, [])
+  }, [dispatch, user])
 
   const isPending = projectsStore.isPending || userStore.isPending
   if (isPending) {
@@ -72,6 +71,8 @@ function LandingPage() {
             {/* TODO: Change the link to ABOUTME */}
             <a
               href={user.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-1 underline font-semibold text-center text-[18px] md:text-start hover:text-gray-500"
             >
               *ABOUT ME
@@ -111,7 +112,7 @@ function LandingPage() {
                 className="flex flex-col text-[16px] mx-4 mt-2"
               >
                 <p className=" underline underline-offset-4">{project.name}</p>
-                <p>{project.description}</p>
+                <p>{project.introduction}</p>
               </div>
             ))
           ) : (

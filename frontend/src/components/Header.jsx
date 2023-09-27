@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { logout } from '../redux/userStore/userSlice'
 import { useEffect, useState } from 'react'
+import { loadDefaultProjectList } from '../redux/projectsStore/projectsSlice'
 
 function Header() {
   const navigate = useNavigate()
@@ -39,9 +40,10 @@ function Header() {
   const logoutBtn = (
     <button
       className="hover:text-gray-500 hover:underline"
-      onClick={async () => {
+      onClick={() => {
         try {
-          await dispatch(logout()).unwrap()
+          dispatch(logout())
+          dispatch(loadDefaultProjectList())
           navigate('/')
         } catch (error) {
           console.error(error)

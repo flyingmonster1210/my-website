@@ -8,7 +8,7 @@ axios.interceptors.response.use(
   (response) => {
     return response
   },
-  async (error) => {
+  (error) => {
     const { config } = error
 
     // Retry request 3 times
@@ -32,8 +32,8 @@ axios.interceptors.response.use(
     }
 
     try {
-      await delayRetryRequest()
-      return await axios(config)
+      delayRetryRequest()
+      return axios(config)
     } catch {
       return Promise.reject(error)
     }

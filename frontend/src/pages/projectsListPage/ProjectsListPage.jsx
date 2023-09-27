@@ -88,7 +88,10 @@ function ProjectsPage() {
                     <p className="border-b-2 border-gray-300 text-2xl font-medium">
                       {project.name}
                     </p>
-                    <p className="text-base italic">{project.technology}</p>
+                    <div className="flex flex-col-reverse w-full justify-between text-base italic md:flex-row ">
+                      <p>{project.technology}</p>
+                      <p>Finish Time: {project.time}</p>
+                    </div>
                     <p className="text-lg">{project.description}</p>
                   </div>
                   {editing ? (

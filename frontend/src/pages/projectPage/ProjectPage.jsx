@@ -44,6 +44,7 @@ function ProjectPage() {
     if (user && user.token) {
       setProjectData({ ...projectData, userId: user._id })
       if (projects === undefined || projects === null) {
+        console.log('project page')
         dispatch(getAllProjectsWithUserId(user._id))
       }
       if (url && id) {

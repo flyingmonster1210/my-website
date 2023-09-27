@@ -9,7 +9,7 @@ const getDefaultProjects = asyncHandler(async (req, res) => {
   const allProjects = await Project.find({ userId: '65076e3442427d2b8e90ca30' })
 
   res.json({
-    message: 'Get all projects.',
+    message: 'Get default projects.',
     project: allProjects,
   })
 })

@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import {
   addProject,
   getAllProjectsWithUserId,
+  getProject,
+  updateProject,
 } from '../../redux/projectsStore/projectsSlice'
 import Spinner from '../../components/Spinner'
 
@@ -29,23 +31,41 @@ function ProjectPage() {
   })
   const { name, technology, time, introduction, description, URL } = projectData
 
+  const getProjectWithId = async (projectId) => {
+    try {
+      const response = await dispatch(getProject(projectId)).unwrap()
+      setProjectData(response)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   useEffect(() => {
     if (user && user.token) {
       setProjectData({ ...projectData, userId: user._id })
       if (projects === undefined || projects === null) {
         dispatch(getAllProjectsWithUserId(user._id))
       }
+      if (url && id) {
+        getProjectWithId(id)
+      }
     } else {
       navigate('/login/')
     }
-  }, [dispatch, navigate, user, projects])
+
+    return () => {}
+  }, [dispatch, navigate, user, projects, url, id])
 
   const isPending = userStore.isPending || projectsStore.isPending
   if (isPending) return <Spinner />
 
-  const onSubmit = async () => {
+  const onSubmit = () => {
     try {
-      await dispatch(addProject(projectData)).unwrap()
+      if (url && id) {
+        dispatch(updateProject({ id, projectData }))
+      } else {
+        dispatch(addProject(projectData))
+      }
     } catch (error) {
       console.error(error)
     }
@@ -64,9 +84,11 @@ function ProjectPage() {
   return (
     <div
       id="project-page"
-      className="flex flex-col flex-grow items-center bg-yellow-50 px-12 py-3 font-poppins"
+      className="flex flex-col flex-grow items-center justify-center bg-yellow-50 px-12 py-3 font-poppins"
     >
-      <h2 className="my-3 p-1 font-semibold text-2xl">Create a new project</h2>
+      <h2 className="my-3 p-1 font-semibold text-2xl">
+        {url && id ? 'Update this project' : 'Create a new project'}
+      </h2>
       <form
         onSubmit={onSubmit}
         id="project-form"
@@ -133,7 +155,7 @@ function ProjectPage() {
           type="submit"
           className="mt-10 p-3 text-[14px] font-semibold md:text-[18px]"
         >
-          Create
+          {url && id ? 'Update' : 'Create'}
         </button>
       </form>
     </div>

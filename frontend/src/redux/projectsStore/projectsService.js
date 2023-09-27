@@ -17,8 +17,9 @@ const getAllProjectsWithUserId = async (userId) => {
 }
 
 // Get a project by id
-const getProject = async (id) => {
-  const { data } = await axios.get(API_URL + id)
+const getProject = async (id, token) => {
+  const config = { headers: { authorization: `Bearer ${token}` } }
+  const { data } = await axios.get(API_URL + id, config)
 
   return (data && data.project) ? data.project : data
 }
@@ -40,8 +41,9 @@ const deleteProject = async (id, token) => {
 }
 
 // Update a project
-const updateProject = async (id, projectData) => {
-  const { data } = await axios.put(API_URL + id, projectData)
+const updateProject = async (id, projectData, token) => {
+  const config = { headers: { authorization: `Bearer ${token}` } }
+  const { data } = await axios.put(API_URL + id, projectData, config)
 
   return (data && data.project) ? data.project : data
 }

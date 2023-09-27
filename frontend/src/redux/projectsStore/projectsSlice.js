@@ -9,6 +9,27 @@ const initialState = {
   projects: null,
   errorMessage: '',
 }
+
+export const updateProject = createAsyncThunk('project/updateProject', async ({ id, projectData }, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().user.user.token
+    return await projectsService.updateProject(id, projectData, token)
+  } catch (error) {
+    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+export const getProject = createAsyncThunk('project/getProject', async (id, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().user.user.token
+    return await projectsService.getProject(id, token)
+  } catch (error) {
+    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
 export const addProject = createAsyncThunk('project/addProject', async (projectData, thunkAPI) => {
   try {
     const token = thunkAPI.getState().user.user.token
@@ -135,6 +156,46 @@ const projectsSlice = createSlice({
         state.errorMessage = ''
       })
       .addCase(addProject.rejected, (state, action) => {
+        state.isError = true
+        state.isSuccess = false
+        state.isPending = false
+        state.errorMessage = action.payload
+      })
+      // getProject
+      .addCase(getProject.pending, (state) => {
+        state.isError = false
+        state.isSuccess = false
+        state.isPending = true
+        state.errorMessage = ''
+      })
+      .addCase(getProject.fulfilled, (state, action) => {
+        state.isError = false
+        state.isSuccess = true
+        state.isPending = false
+        state.errorMessage = ''
+      })
+      .addCase(getProject.rejected, (state, action) => {
+        state.isError = true
+        state.isSuccess = false
+        state.isPending = false
+        state.errorMessage = action.payload
+      })
+
+      // updataProject
+      .addCase(updateProject.pending, (state) => {
+        state.isError = false
+        state.isSuccess = false
+        state.isPending = true
+        state.errorMessage = ''
+      })
+      .addCase(updateProject.fulfilled, (state, action) => {
+        state.isError = false
+        state.isSuccess = true
+        state.isPending = false
+        state.projects = state.projects.map((project) => project._id === action.payload._id ? action.payload : project)
+        state.errorMessage = ''
+      })
+      .addCase(updateProject.rejected, (state, action) => {
         state.isError = true
         state.isSuccess = false
         state.isPending = false

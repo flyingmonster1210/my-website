@@ -70,6 +70,7 @@ function Login() {
         message: 'Login Fail!',
       })
       console.error(error)
+      alert(error)
     }
   }
 

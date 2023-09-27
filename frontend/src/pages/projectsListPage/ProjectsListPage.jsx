@@ -37,7 +37,13 @@ function ProjectsPage() {
       console.error(error)
     }
   }
-  const updateProjectWithId = () => {}
+  const updateProjectWithId = (index) => {
+    if (projects && projects[index]) {
+      navigate('/project/' + projects[index]._id)
+    } else {
+      navigate('/login/')
+    }
+  }
   const addNewProject = () => {
     navigate('/project/')
   }
@@ -88,7 +94,7 @@ function ProjectsPage() {
                   {editing ? (
                     <div className="flex flex-col items-center justify-end space-y-3">
                       <button
-                        onClick={updateProjectWithId}
+                        onClick={() => updateProjectWithId(index)}
                         className="p-1 w-full border-2 border-blue-400 rounded-md bg-blue-200 hover:text-gray-500"
                       >
                         Update

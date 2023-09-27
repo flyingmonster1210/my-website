@@ -5,8 +5,8 @@ const { keysNotFound } = require('../tools')
 
 // @desc    Show all the projects of the default user
 // @route   GET /api/project/
-const getAllProjects = asyncHandler(async (req, res) => {
-  const allProjects = await Project.find()
+const getDefaultProjects = asyncHandler(async (req, res) => {
+  const allProjects = await Project.find({ userId: '65076e3442427d2b8e90ca30' })
 
   res.json({
     message: 'Get all projects.',
@@ -157,7 +157,7 @@ const deleteProject = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
-  getAllProjects,
+  getDefaultProjects,
   getProject,
   addProject,
   deleteProject,

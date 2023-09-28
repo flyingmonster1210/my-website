@@ -61,6 +61,7 @@ const UserPage = () => {
     e.preventDefault()
 
     try {
+      const newIntro = introduction.replace(/\n/g, '<br/>')
       if (isRegistering) {
         const user = await dispatch(
           register({
@@ -70,7 +71,7 @@ const UserPage = () => {
             email,
             linkedin,
             github,
-            introduction,
+            introduction: newIntro,
           })
         ).unwrap()
         dispatch(getAllProjectsWithUserId(user._id))
@@ -85,10 +86,11 @@ const UserPage = () => {
               email,
               linkedin,
               github,
-              introduction,
+              introduction: newIntro,
             },
           })
         ).unwrap()
+        navigate('/')
       }
     } catch (error) {
       console.error(error)
@@ -184,7 +186,7 @@ const UserPage = () => {
             id="introduction"
             rows="5"
             type="text"
-            value={introduction}
+            value={introduction.replaceAll('<br/>', '\n')}
             onChange={onChange}
             className="block p-2 w-full col-span-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
           />

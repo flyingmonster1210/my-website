@@ -16,6 +16,7 @@ import {
   loadDefaultProjectList,
   projectReset,
 } from '../../redux/projectsStore/projectsSlice'
+import NewlineText from '../../components/NewLineText'
 
 function LandingPage() {
   const dispatch = useDispatch()
@@ -67,7 +68,7 @@ function LandingPage() {
             TITLE
           </p>
           <div className="flex flex-col mt-4 text-start text-[16px] md:mt-8">
-            <p>{user.introduction}</p>
+            <NewlineText text={user.introduction} />
             {/* TODO: Change the link to ABOUTME */}
             <a
               href={user.linkedin}
@@ -99,31 +100,31 @@ function LandingPage() {
         <div id="experience">
           <div
             id="title"
-            className="flex flex-row text-[18px] font-semibold items-center"
+            className="flex flex-row text-[20px] font-semibold items-center"
           >
             <img src={star} alt="star" className="max-h-[18px]" />
             <p>Eperience</p>
           </div>
 
-          {projects ? (
-            projects.map((project, index) => (
-              <div
-                key={'project' + index}
-                className="flex flex-col text-[16px] mx-4 mt-2"
-              >
-                <p className=" underline underline-offset-4">{project.name}</p>
-                <p>{project.introduction}</p>
-              </div>
-            ))
-          ) : (
-            <></>
-          )}
+          {projects && projects.length > 0
+            ? projects.map((project, index) => (
+                <div
+                  key={'project' + index}
+                  className="flex flex-col text-[16px] mx-4 mt-2"
+                >
+                  <p className="w-full border-gray-400 border-b-2 font-semibold">
+                    {project.name}
+                  </p>
+                  <NewlineText text={project.introduction} />
+                </div>
+              ))
+            : 'Empty'}
         </div>
 
         <div id="contact">
           <div
             id="title"
-            className="flex flex-row text-[18px] font-semibold items-center"
+            className="flex flex-row text-[20px] font-semibold items-center"
           >
             <img src={star} alt="star" className="max-h-[18px]" />
             <p>Contact</p>

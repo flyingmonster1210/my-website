@@ -6,6 +6,7 @@ import {
   deleteProject,
   getAllProjectsWithUserId,
 } from '../../redux/projectsStore/projectsSlice'
+import NewlineText from '../../components/NewLineText'
 
 function ProjectsPage() {
   const dispatch = useDispatch()
@@ -92,7 +93,10 @@ function ProjectsPage() {
                       <p>{project.technology}</p>
                       <p>Finish Time: {project.time}</p>
                     </div>
-                    <p className="text-lg">{project.description}</p>
+                    <NewlineText
+                      text={project.description}
+                      className={'text-lg'}
+                    />
                   </div>
                   {editing ? (
                     <div className="flex flex-col items-center justify-end space-y-3">

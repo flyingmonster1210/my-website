@@ -44,10 +44,9 @@ function ProjectPage() {
     if (user && user.token) {
       setProjectData({ ...projectData, userId: user._id })
       if (projects === undefined || projects === null) {
-        console.log('project page')
         dispatch(getAllProjectsWithUserId(user._id))
       }
-      if (url && id) {
+      if (url && id && id !== 'project') {
         getProjectWithId(id)
       }
     } else {
@@ -55,17 +54,25 @@ function ProjectPage() {
     }
 
     return () => {}
-  }, [dispatch, navigate, user, projects, url, id])
+    // }, [dispatch, navigate, user, projects, url, id])
+  }, [])
 
   const isPending = userStore.isPending || projectsStore.isPending
   if (isPending) return <Spinner />
 
   const onSubmit = () => {
     try {
+      projectData.description = projectData.description.replace(/\n/g, '<br/>')
+      projectData.introduction = projectData.introduction.replace(
+        /\n/g,
+        '<br/>'
+      )
       if (url && id) {
         dispatch(updateProject({ id, projectData }))
+        navigate('/projects/')
       } else {
         dispatch(addProject(projectData))
+        navigate('/projects/')
       }
     } catch (error) {
       console.error(error)
@@ -73,6 +80,9 @@ function ProjectPage() {
   }
 
   const onChange = (e) => {
+    // if (e.target.id === 'description') {
+    //   e.target.value = e.target.value.replace(/\./g, '')
+    // }
     setProjectData(
       (state) =>
         (state = {
@@ -80,6 +90,18 @@ function ProjectPage() {
           [e.target.id]: e.target.value,
         })
     )
+  }
+
+  const handleEnterKey = (e) => {
+    if (e.key === 'Enter') {
+      setProjectData(
+        (state) =>
+          (state = {
+            ...state,
+            description: e.target.value + '\r\n',
+          })
+      )
+    }
   }
 
   return (
@@ -105,7 +127,7 @@ function ProjectPage() {
             className="block p-1 w-full col-span-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
           />
 
-          <span>Technology</span>
+          <span>Technology Stack</span>
           <input
             id="technology"
             type="text"
@@ -137,7 +159,7 @@ function ProjectPage() {
             id="introduction"
             rows="5"
             type="text"
-            value={introduction}
+            value={introduction.replaceAll('<br/>', '\n')}
             onChange={onChange}
             className="block p-2 w-full col-span-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
           />
@@ -147,7 +169,7 @@ function ProjectPage() {
             id="description"
             rows="5"
             type="text"
-            value={description}
+            value={description.replaceAll('<br/>', '\n')}
             onChange={onChange}
             className="block p-2 w-full col-span-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
           />

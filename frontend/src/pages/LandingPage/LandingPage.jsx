@@ -12,13 +12,14 @@ import {
   userReset,
 } from '../../redux/userStore/userSlice'
 import {
-  getAllProjectsWithUserId,
   loadDefaultProjectList,
   projectReset,
 } from '../../redux/projectsStore/projectsSlice'
 import NewlineText from '../../components/NewLineText'
+import { useNavigate } from 'react-router-dom'
 
 function LandingPage() {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   let userStore = useSelector((state) => state.user)
@@ -114,8 +115,9 @@ function LandingPage() {
           {projects && projects.length > 0
             ? projects.map((project, index) => (
                 <div
+                  onClick={() => navigate('project/description/' + index)}
                   key={'project' + index}
-                  className="flex flex-col text-[16px] mx-4 mt-2"
+                  className="flex flex-col text-[16px] mx-4 mt-2 hover:cursor-pointer"
                 >
                   <p className="w-full border-gray-400 border-b-2 font-semibold">
                     {project.name}

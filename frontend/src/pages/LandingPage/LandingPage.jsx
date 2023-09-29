@@ -58,14 +58,19 @@ function LandingPage() {
     >
       <div
         id="section1"
-        className="flex flex-col h-[50%] w-[90%] items-center justify-center p-5 md:p-10 xl:p-20 md:flex-row md:mt-14"
+        className="flex flex-col w-[90%] items-center justify-center  md:flex-row"
       >
         <div
           id="left"
           className="flex flex-col w-full items-start justify-center  md:w-[50%]"
         >
-          <p className=" font-black text-[80px] mt-2 w-full text-center md:text-start xs:text-[40px]">
-            TITLE
+          <p className="font-black text-[60px] w-full text-center my-auto md:text-start xs:text-[30px]">
+            Welcome!
+          </p>
+          <p>
+            My name is Weijie Zeng, and I recently graduated with a bachelor's
+            degree in Computer Science from SFU, and the following is my brief
+            summary:
           </p>
           <div className="flex flex-col mt-4 text-start text-[16px] md:mt-8">
             <NewlineText text={user.introduction} />
@@ -88,7 +93,7 @@ function LandingPage() {
           <img
             src={avatar}
             alt="avatar"
-            className="rounded-full border-gray-100 border-2 w-[50%] h-[50%] md:w-[70%] md:h-[70%]"
+            className="rounded-full border-gray-100 border-2 w-[60%] h-[60%] md:w-[80%] md:h-[80%]"
           />
         </div>
       </div>

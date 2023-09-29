@@ -54,13 +54,14 @@ function ProjectPage() {
     }
 
     return () => {}
-    // }, [dispatch, navigate, user, projects, url, id])
-  }, [])
+  }, [dispatch, navigate, user, projects, url, id])
 
   const isPending = userStore.isPending || projectsStore.isPending
   if (isPending) return <Spinner />
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault()
+
     try {
       projectData.description = projectData.description.replace(/\n/g, '<br/>')
       projectData.introduction = projectData.introduction.replace(
@@ -80,9 +81,6 @@ function ProjectPage() {
   }
 
   const onChange = (e) => {
-    // if (e.target.id === 'description') {
-    //   e.target.value = e.target.value.replace(/\./g, '')
-    // }
     setProjectData(
       (state) =>
         (state = {
@@ -90,18 +88,6 @@ function ProjectPage() {
           [e.target.id]: e.target.value,
         })
     )
-  }
-
-  const handleEnterKey = (e) => {
-    if (e.key === 'Enter') {
-      setProjectData(
-        (state) =>
-          (state = {
-            ...state,
-            description: e.target.value + '\r\n',
-          })
-      )
-    }
   }
 
   return (

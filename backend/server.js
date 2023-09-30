@@ -9,7 +9,7 @@ const { errorHandler } = require('./middleware/errorMiddleware')
 const { requestInfo } = require('./middleware/normalMiddleware')
 const connetDB = require('./config/db')
 
-app.listen(port || 3000, () => {
+app.listen(3000 || port, () => {
   console.log('\n\n-----------------------------------------------------------')
   console.log(`Server is listening on port ${port}`)
 })

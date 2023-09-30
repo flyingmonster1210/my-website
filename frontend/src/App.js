@@ -23,7 +23,7 @@ function App () {
           <Route path='project/:id' element={<ProjectPage />} />
           <Route path='/user' element={<UserPage />} />
           <Route path='/register' element={<UserPage />} />
-          <Route path='/' element={<LandingPage />} />
+          {/* <Route path='/' element={<LandingPage />} /> */}
         </Routes>
         <Footer />
       </div>

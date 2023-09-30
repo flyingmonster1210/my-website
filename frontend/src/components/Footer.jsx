@@ -24,7 +24,12 @@ function Footer() {
 
       <div className="flex flex-row items-center space-x-1">
         <img src={email} alt="telephone" className="max-h-[16px]" />
-        <span className="break-all">{user.email}</span>
+        <a
+          href={'mailto:' + user.email}
+          className="break-all hover:text-gray-500"
+        >
+          {user.email}
+        </a>
       </div>
 
       <div className="flex flex-row space-x-2 ">

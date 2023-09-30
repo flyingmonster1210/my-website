@@ -82,7 +82,7 @@ function LandingPage() {
               rel="noopener noreferrer"
               className="mt-1 underline font-semibold text-center text-[18px] md:text-start hover:text-gray-500"
             >
-              *ABOUT ME
+              *RESUME
             </a>
           </div>
         </div>
@@ -119,9 +119,17 @@ function LandingPage() {
                   key={'project' + index}
                   className="flex flex-col text-[16px] mx-4 mt-2 hover:cursor-pointer"
                 >
-                  <p className="w-full border-gray-400 border-b-2 font-semibold">
-                    {project.name}
-                  </p>
+                  <div className="flex flex-row w-full justify-between border-gray-400 border-b-2">
+                    <p className=" font-semibold">{project.name}</p>
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={project.URL}
+                      className="text-blue-400 italic align-text-bottom text-xs hover:text-gray-400 hover:cursor-pointer"
+                    >
+                      GO TO
+                    </a>
+                  </div>
                   <NewlineText text={project.introduction} />
                 </div>
               ))
@@ -144,9 +152,12 @@ function LandingPage() {
             </div>
             <div className="flex flex-row items-center space-x-1">
               <img src={email} alt="telephone" className="max-h-[16px]" />
-              <span className="border-b  border-black break-all">
+              <a
+                href={'mailto:' + user.email}
+                className="border-b border-black break-all hover:text-gray-500"
+              >
                 {user.email}
-              </span>
+              </a>
             </div>
             <div className="flex flex-row items-center space-x-1">
               <img src={linkedin} alt="telephone" className="max-h-[16px]" />

@@ -18,7 +18,7 @@ import {
 import NewlineText from '../../components/NewLineText'
 import { useNavigate } from 'react-router-dom'
 
-function LandingPage() {
+function HomePage() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -188,4 +188,4 @@ function LandingPage() {
   )
 }
 
-export default LandingPage
+export default HomePage

@@ -7,7 +7,6 @@ import UserPage from './pages/userPage/UserPage'
 import LoginPage from './pages/loginPage/LoginPage'
 import ProjectPage from './pages/projectPage/ProjectPage'
 import ProjectDetails from './pages/projectDetails/ProjectDetails'
-// import LandingPage from './pages/landingPage/LandingPage'
 import HomePage from './pages/homePage/HomePage'
 
 
@@ -24,7 +23,6 @@ function App () {
           <Route path='project/:id' element={<ProjectPage />} />
           <Route path='/user' element={<UserPage />} />
           <Route path='/register' element={<UserPage />} />
-          {/* <Route path='/' element={<LandingPage />} /> */}
           <Route path='/' element={<HomePage />} />
         </Routes>
         <Footer />

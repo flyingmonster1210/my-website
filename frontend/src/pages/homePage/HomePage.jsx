@@ -115,12 +115,16 @@ function HomePage() {
           {projects && projects.length > 0
             ? projects.map((project, index) => (
                 <div
-                  onClick={() => navigate('project/description/' + index)}
                   key={'project' + index}
                   className="flex flex-col text-[16px] mx-4 mt-2 hover:cursor-pointer"
                 >
                   <div className="flex flex-row w-full justify-between border-gray-400 border-b-2">
-                    <p className=" font-semibold">{project.name}</p>
+                    <p
+                      onClick={() => navigate('project/description/' + index)}
+                      className=" font-semibold"
+                    >
+                      {project.name}
+                    </p>
                     <a
                       target="_blank"
                       rel="noopener noreferrer"
@@ -130,7 +134,9 @@ function HomePage() {
                       GO TO
                     </a>
                   </div>
-                  <NewlineText text={project.introduction} />
+                  <div onClick={() => navigate('project/description/' + index)}>
+                    <NewlineText text={project.introduction} />
+                  </div>
                 </div>
               ))
             : 'Empty'}

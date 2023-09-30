@@ -26,7 +26,7 @@ function ProjectsPage() {
     } else {
       navigate('/login/')
     }
-  }, [user, projects, dispatch])
+  }, [user, projects, navigate, dispatch])
 
   const isPending = user.idPending && projects.isPending
   if (isPending) return <Spinner />

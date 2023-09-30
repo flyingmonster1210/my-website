@@ -29,7 +29,7 @@ function ProjectDetails() {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href={project.URL}
+            href={project?.URL}
             className="text-blue-400 italic underline rounded-md p-2 hover:text-gray-400 hover:cursor-pointer"
           >
             GO TO

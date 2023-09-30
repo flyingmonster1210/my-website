@@ -70,7 +70,7 @@ export const loadDefaultProjectList = createAsyncThunk('project/loadDefaultProje
 
 const compareProjectTime = (projectA, projectB) => {
   if (projectA && projectB && projectA.time && projectB.time) {
-    if (projectA.time == projectB.time) return 0
+    if (projectA.time === projectB.time) return 0
     if (projectA.time > projectB.time) return -1
     if (projectA.time < projectB.time) return 1
   }

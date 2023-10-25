@@ -103,13 +103,13 @@ function HomePage() {
         id="section2"
         className="grid grid-cols-1 gap-3 w-[90%] my-5 items-center md:grid-cols-2 md:items-start md:my-8"
       >
-        <div id="experience">
+        <div id="my-projects">
           <div
             id="title"
             className="flex flex-row text-[20px] font-semibold items-center"
           >
             <img src={star} alt="star" className="max-h-[18px]" />
-            <p>Eperience</p>
+            <p>My Projects</p>
           </div>
 
           {projects && projects.length > 0

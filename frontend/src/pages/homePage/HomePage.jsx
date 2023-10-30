@@ -77,7 +77,7 @@ function HomePage() {
             <NewlineText text={user.introduction} />
             {/* TODO: Change the link to ABOUTME */}
             <a
-              href={user.linkedin}
+              href="https://1drv.ms/b/s!AhkE9KkXi9nPgbUudmUT24HtXeDbAA?e=wkYWVK"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-1 underline font-semibold text-center text-[18px] md:text-start hover:text-gray-500"
